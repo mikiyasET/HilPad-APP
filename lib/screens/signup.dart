@@ -118,7 +118,7 @@ class Signup extends GetWidget<AuthController> {
                           Buttons.Google,
                           text: 'Sign up with Google',
                           padding: EdgeInsets.symmetric(vertical: 10),
-                          onPressed: () => controller.signUpWithGoogle(),
+                          onPressed: (){},
                         ),
                       ),
                     ],

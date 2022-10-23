@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:get/get.dart';
 import 'package:hilpad/controller/AuthController.dart';
+import 'package:hilpad/screens/Home.dart';
+import 'package:hilpad/screens/HomePage.dart';
 import 'package:hilpad/services/ThemeService.dart';
 
 class Login extends GetWidget<AuthController> {
@@ -92,8 +94,10 @@ class Login extends GetWidget<AuthController> {
                       SizedBox(
                         width: double.infinity,
                         child: MaterialButton(
-                          onPressed: () => controller.logIn(
-                              emailController.text, passwordController.text),
+                          onPressed: () {
+                            controller.logIn(emailController.text, passwordController.text);
+                            Get.to(HomePage());
+                          },
                           child: Text('Login',
                               style: TextStyle(color: Colors.white)),
                           color: Color(0xff28D8A1),
@@ -116,7 +120,7 @@ class Login extends GetWidget<AuthController> {
                         child: SignInButton(
                           Buttons.Google,
                           padding: EdgeInsets.symmetric(vertical: 10),
-                          onPressed: () => controller.signInWithGoogle(),
+                          onPressed: (){},
                         ),
                       ),
                     ],

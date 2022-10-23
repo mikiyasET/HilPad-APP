@@ -36,7 +36,7 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Obx(() => Text("${x.user?.email} ${x.user?.uid} ${tc.isDarkMode} "))
+            Obx(() => Text("${x.user} ${x.user} ${tc.isDarkMode} "))
           ],
         ),
       ),
