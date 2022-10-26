@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:get/get.dart';
 import 'package:hilpad/controller/AuthController.dart';
-import 'package:hilpad/models/user.dart';
 import 'package:hilpad/screens/Home.dart';
 import 'package:hilpad/screens/HomePage.dart';
 import 'package:hilpad/services/ThemeService.dart';
@@ -96,13 +95,8 @@ class Login extends GetWidget<AuthController> {
                         width: double.infinity,
                         child: MaterialButton(
                           onPressed: () {
-                            /*User u = User();
-                            print(getList(u));
-                            print(getItem(1, u));*/
-
-
-                            //controller.logIn(emailController.text, passwordController.text);
-                            //Get.to(HomePage());
+                            controller.logIn(emailController.text, passwordController.text);
+                            Get.to(HomePage());
                           },
                           child: Text('Login',
                               style: TextStyle(color: Colors.white)),
