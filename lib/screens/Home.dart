@@ -5,6 +5,8 @@ import 'package:hilpad/screens/HomePage.dart';
 import 'package:hilpad/screens/login.dart';
 
 class Home extends GetWidget<AuthController> {
+  const Home({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Obx(

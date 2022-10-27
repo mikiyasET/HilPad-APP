@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../models/user.dart';
+
 class AuthController extends GetxController {
   var user = User().obs;
   @override
@@ -35,7 +37,6 @@ class AuthController extends GetxController {
 
 }
 
-class User{
-  String? email;
-  String? password;
+class User {
 }
+
