@@ -1,9 +1,11 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hilpad/components/course_tile.dart';
 import 'package:hilpad/controller/AuthController.dart';
 import 'package:hilpad/controller/Controller.dart';
 import 'package:hilpad/controller/HomePage.dart';
+import 'package:hilpad/screens/shedule.dart';
 import 'package:hilpad/services/ThemeService.dart';
 
 class HomePage extends StatelessWidget {
@@ -15,64 +17,62 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const Drawer(),
-      appBar: AppBar(
-        title: const Text('HilPad'),
-        centerTitle: true,
-        actions: [
-          IconButton(onPressed: () => x.signOut(), icon: Icon(Icons.logout)),
-          GetBuilder<ThemeController>(
-            builder: (controller) => IconButton(
-              icon: Icon(
-                controller.isDarkMode.value ? Icons.wb_sunny : Icons.dark_mode,
+    return SafeArea(
+      child: Scaffold(
+        //drawer: const Drawer(),
+        appBar: AppBar(
+          title: const Text('HilPad'),
+          centerTitle: true,
+          actions: [
+            IconButton(onPressed: () => x.signOut(), icon: Center(child: Icon(Icons.logout))),
+            GetBuilder<ThemeController>(
+              builder: (controller) => IconButton(
+                icon: Icon(
+                  controller.isDarkMode.value ? Icons.wb_sunny : Icons.dark_mode,
+                ),
+                onPressed: () => controller.toggleDarkMode(),
               ),
-              onPressed: () => controller.toggleDarkMode(),
-            ),
-          )
-        ],
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Obx(() => Text("${x.user} ${x.user} ${tc.isDarkMode} "))
+            )
           ],
         ),
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Schedule(),
+        ),
+        bottomNavigationBar: Obx(() => BottomNavyBar(
+              selectedIndex: c.selectedIndex.value,
+              showElevation: true,
+              itemCornerRadius: 24,
+              curve: Curves.easeIn,
+              onItemSelected: (index) => c.changePage(index),
+              items: <BottomNavyBarItem>[
+                BottomNavyBarItem(
+                  icon: Icon(Icons.apps),
+                  title: Text('Home'),
+                  activeColor: tc.isDarkMode.value ? Colors.white : Colors.black,
+                  textAlign: TextAlign.center,
+                ),
+                BottomNavyBarItem(
+                  icon: Icon(Icons.people),
+                  title: Text('Users'),
+                  activeColor: tc.isDarkMode.value ? Colors.white : Colors.black,
+                  textAlign: TextAlign.center,
+                ),
+                BottomNavyBarItem(
+                  icon: Icon(Icons.message),
+                  title: Text('Messages'),
+                  activeColor: tc.isDarkMode.value ? Colors.white : Colors.black,
+                  textAlign: TextAlign.center,
+                ),
+                BottomNavyBarItem(
+                  icon: Icon(Icons.settings),
+                  title: Text('Settings'),
+                  activeColor: tc.isDarkMode.value ? Colors.white : Colors.black,
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            )),
       ),
-      bottomNavigationBar: Obx(() => BottomNavyBar(
-            selectedIndex: c.selectedIndex.value,
-            showElevation: true,
-            itemCornerRadius: 24,
-            curve: Curves.easeIn,
-            onItemSelected: (index) => c.changePage(index),
-            items: <BottomNavyBarItem>[
-              BottomNavyBarItem(
-                icon: Icon(Icons.apps),
-                title: Text('Home'),
-                activeColor: tc.isDarkMode.value ? Colors.white : Colors.black,
-                textAlign: TextAlign.center,
-              ),
-              BottomNavyBarItem(
-                icon: Icon(Icons.people),
-                title: Text('Users'),
-                activeColor: tc.isDarkMode.value ? Colors.white : Colors.black,
-                textAlign: TextAlign.center,
-              ),
-              BottomNavyBarItem(
-                icon: Icon(Icons.message),
-                title: Text('Messages'),
-                activeColor: tc.isDarkMode.value ? Colors.white : Colors.black,
-                textAlign: TextAlign.center,
-              ),
-              BottomNavyBarItem(
-                icon: Icon(Icons.settings),
-                title: Text('Settings'),
-                activeColor: tc.isDarkMode.value ? Colors.white : Colors.black,
-                textAlign: TextAlign.center,
-              ),
-            ],
-          )),
     );
   }
 }

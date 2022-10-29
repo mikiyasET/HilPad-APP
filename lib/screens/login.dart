@@ -95,14 +95,14 @@ class Login extends GetWidget<AuthController> {
                       SizedBox(
                         width: double.infinity,
                         child: MaterialButton(
-                          onPressed: () {
-                            /*User u = User();
-                            print(getList(u));
-                            print(getItem(1, u));*/
+                          onPressed: () async{
+                            User u = User();
 
+                            //print(await getList(u));
+                            //print(await getItem(1, u));
 
                             //controller.logIn(emailController.text, passwordController.text);
-                            //Get.to(HomePage());
+                            Get.to(HomePage());
                           },
                           child: Text('Login',
                               style: TextStyle(color: Colors.white)),

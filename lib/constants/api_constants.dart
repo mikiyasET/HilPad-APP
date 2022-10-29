@@ -1,4 +1,4 @@
-const String baseUrl = "https://hilpadbot.codeabay.com/";
+const String hilPadBaseUrl = "https://hilpadbot.codeabay.com/";
 const String user = "api/users";
 const String studentData = "https://hilpadbot.codeabay.com/";
 const String student = "https://hilpadbot.codeabay.com/";

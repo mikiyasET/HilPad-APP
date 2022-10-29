@@ -4,7 +4,7 @@ import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:hilpad/constants/api_constants.dart';
 import 'package:hilpad/models/basemodel.dart';
 
-/*class User {
+class User extends BaseModel {
   int? id;
   String? name;
   String? username;
@@ -24,9 +24,9 @@ import 'package:hilpad/models/basemodel.dart';
         this.status,
         this.password,
         this.idNo,
-        this.stuId});
+        this.stuId}) : super(controller: user);
 
-  User.fromJson(Map<String, dynamic> json) {
+  User.fromJson(Map<String, dynamic> json) :super(controller: user) {
     id = json['id'];
     name = json['name'];
     username = json['username'];
@@ -53,14 +53,18 @@ import 'package:hilpad/models/basemodel.dart';
     return data;
   }
   
-}*/
+}
 
 
-/*
   Future<List> getList(BaseModel bm)async {
     Response c = await bm.hilpadGet();
 
-    var ddd=jsonDecode(c.body);
+    print(c.body);
+    print(c.status);
+    print(c.headers);
+    print(c.request);
+
+    var ddd=jsonDecode(c.body.toString());
     var pro = (ddd as List).map((data) {return Model.fromJson(data);}).toList();
     return pro;
   }
@@ -68,8 +72,13 @@ import 'package:hilpad/models/basemodel.dart';
   Future getItem(int userId,BaseModel bm)async {
     Response c = await bm.hilpadGetById(id: userId);
 
+    print(c.body);
+    print(c.status);
+    print(c.headers);
+    print(c.request);
+
+
     var ddd=jsonDecode(c.body);
     var pro =  Model.fromJson(ddd);
     return pro;
   }
-*/

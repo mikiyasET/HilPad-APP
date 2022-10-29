@@ -1,4 +1,3 @@
-/*
 class Batch {
   int? id;
   int? startYear;
@@ -22,4 +21,4 @@ class Batch {
     data['start_year'] = startYear;
     return data;
   }
-}*/
+}

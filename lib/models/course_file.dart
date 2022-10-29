@@ -1,4 +1,4 @@
-/*class CourseFile {
+class CourseFile {
   int? id;
   int? courseId;
   String? fileId;
@@ -45,4 +45,4 @@
     data['status'] = status;
     return data;
   }
-}*/
+}

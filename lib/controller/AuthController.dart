@@ -4,6 +4,7 @@ import '../models/user.dart';
 
 class AuthController extends GetxController {
   var user = User().obs;
+  var token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjY2NTU0ODQ0fQ.78_7JOvRKiRgZE8sJd9dOmOY3juyCWyPT4yGpT3XSak".obs;
   @override
   void onInit() {
     super.onInit();
@@ -37,6 +38,4 @@ class AuthController extends GetxController {
 
 }
 
-class User {
-}
 

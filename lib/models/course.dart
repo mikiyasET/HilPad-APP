@@ -1,4 +1,4 @@
-/*class Course {
+class Course {
   int? id;
   String? name;
   String? code;
@@ -21,4 +21,4 @@
     data['credit_hour'] = creditHour;
     return data;
   }
-}*/
+}

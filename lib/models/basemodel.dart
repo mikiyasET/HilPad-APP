@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:hilpad/controller/AuthController.dart';
 import 'package:hilpad/models/batch.dart';
 import 'package:hilpad/models/course.dart';
 import 'package:hilpad/models/course_file.dart';
@@ -7,28 +6,21 @@ import 'package:hilpad/models/student.dart';
 import 'package:hilpad/models/student_data.dart';
 import 'package:hilpad/models/user.dart';
 
-/*class BaseModel extends GetConnect{
+import '../constants/api_constants.dart';
+import '../controller/AuthController.dart';
+
+class BaseModel extends GetConnect{
   String controller;
   BaseModel({required this.controller});
 
-  Future<Response> hilpadGet() => get(controller);
-  Future<Response> hilpadDelete({required int id}) => get('$controller/$id');
-  Future<Response> hilpadGetById({required int id}) => get('$controller/$id');
-  Future<Response> hilpadPost({required Map data}) => post(controller,data);
-  Future<Response> hilpadPatch({required Map data, required int id}) => patch('$controller/$id',data);
-  Future<Response> hilpadPut({required Map data}) => put(controller,data);
+  Future<Response> hilpadGet() => get(hilPadBaseUrl+controller,headers: {"Authorization":"bearer ${Get.find<AuthController>().token.value}"});
+  Future<Response> hilpadDelete({required int id}) => get(hilPadBaseUrl+'$controller/$id',headers: {"Authorization":"bearer ${Get.find<AuthController>().token.value}"});
+  Future<Response> hilpadGetById({required int id}) => get(hilPadBaseUrl+'$controller/$id',headers: {"Authorization":"bearer ${Get.find<AuthController>().token.value}"});
+  Future<Response> hilpadPost({required Map data}) => post(hilPadBaseUrl+controller,data,headers: {"Authorization":"bearer ${Get.find<AuthController>().token.value}"});
+  Future<Response> hilpadPatch({required Map data, required int id}) => patch(hilPadBaseUrl+'$controller/$id',data,headers: {"Authorization":"bearer ${Get.find<AuthController>().token.value}"});
+  Future<Response> hilpadPut({required Map data}) => put(hilPadBaseUrl+controller,data,headers: {"Authorization":"bearer ${Get.find<AuthController>().token.value}"});
 
-  @override
-  void onInit() {
-    httpClient.baseUrl = baseUrl;
-    httpClient.maxAuthRetries = 3;
-    httpClient.addAuthenticator<Model?>((request) {
-      request.headers['Authorization'] = "bearer ${("token should be here")}";
-      return request;
-    });
-  }
-
-
+  
 }
 
 abstract class Model {
@@ -52,4 +44,4 @@ abstract class Model {
     }
   }
   Map<String, dynamic> toJson();
-}*/
+}
