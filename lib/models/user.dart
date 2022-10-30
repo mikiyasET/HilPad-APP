@@ -64,12 +64,12 @@ class User extends BaseModel {
     print(c.headers);
     print(c.request);
 
-    var ddd=jsonDecode(c.body.toString());
+    var ddd=jsonDecode(c.body.data.toString());
     var pro = (ddd as List).map((data) {return Model.fromJson(data);}).toList();
     return pro;
   }
 
-  Future getItem(int userId,BaseModel bm)async {
+  Future getItem({int? userId, required BaseModel bm})async {
     Response c = await bm.hilpadGetById(id: userId);
 
     print(c.body);
@@ -78,7 +78,7 @@ class User extends BaseModel {
     print(c.request);
 
 
-    var ddd=jsonDecode(c.body);
+    var ddd=jsonDecode(c.body.data);
     var pro =  Model.fromJson(ddd);
     return pro;
   }

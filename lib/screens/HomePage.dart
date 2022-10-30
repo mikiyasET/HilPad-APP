@@ -24,7 +24,7 @@ class HomePage extends StatelessWidget {
           title: const Text('HilPad'),
           centerTitle: true,
           actions: [
-            IconButton(onPressed: () => x.signOut(), icon: Center(child: Icon(Icons.logout))),
+            IconButton(onPressed: () => x.signOut(), icon: const Center(child: Icon(Icons.logout))),
             GetBuilder<ThemeController>(
               builder: (controller) => IconButton(
                 icon: Icon(
@@ -35,8 +35,8 @@ class HomePage extends StatelessWidget {
             )
           ],
         ),
-        body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
+        body: const SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: Schedule(),
         ),
         bottomNavigationBar: Obx(() => BottomNavyBar(
@@ -47,26 +47,26 @@ class HomePage extends StatelessWidget {
               onItemSelected: (index) => c.changePage(index),
               items: <BottomNavyBarItem>[
                 BottomNavyBarItem(
-                  icon: Icon(Icons.apps),
-                  title: Text('Home'),
+                  icon: const Icon(Icons.apps),
+                  title: const Text('Home'),
                   activeColor: tc.isDarkMode.value ? Colors.white : Colors.black,
                   textAlign: TextAlign.center,
                 ),
                 BottomNavyBarItem(
-                  icon: Icon(Icons.people),
-                  title: Text('Users'),
+                  icon: const Icon(Icons.people),
+                  title: const Text('Users'),
                   activeColor: tc.isDarkMode.value ? Colors.white : Colors.black,
                   textAlign: TextAlign.center,
                 ),
                 BottomNavyBarItem(
-                  icon: Icon(Icons.message),
-                  title: Text('Messages'),
+                  icon: const Icon(Icons.message),
+                  title: const Text('Messages'),
                   activeColor: tc.isDarkMode.value ? Colors.white : Colors.black,
                   textAlign: TextAlign.center,
                 ),
                 BottomNavyBarItem(
-                  icon: Icon(Icons.settings),
-                  title: Text('Settings'),
+                  icon: const Icon(Icons.settings),
+                  title: const Text('Settings'),
                   activeColor: tc.isDarkMode.value ? Colors.white : Colors.black,
                   textAlign: TextAlign.center,
                 ),

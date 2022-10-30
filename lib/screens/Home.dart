@@ -9,7 +9,6 @@ class Home extends GetWidget<AuthController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-        () => (Get.find<AuthController>().user.value == null) ? HomePage() : Login());
+    return Obx(() => (Get.find<AuthController>().token.value != "" && Get.find<AuthController>().token.value.toLowerCase() != "null") ? HomePage() : Login());
   }
 }

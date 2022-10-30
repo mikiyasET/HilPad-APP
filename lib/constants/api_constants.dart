@@ -1,5 +1,7 @@
-const String hilPadBaseUrl = "https://hilpadbot.codeabay.com/";
-const String user = "api/users";
+const String hilPadBaseUrl = "https://hilpadbot.codeabay.com/api/";
+const String user = "users";
+const String login = "auth/login";
+const String signup = "auth/signup";
 const String studentData = "https://hilpadbot.codeabay.com/";
 const String student = "https://hilpadbot.codeabay.com/";
 const String course = "https://hilpadbot.codeabay.com/";

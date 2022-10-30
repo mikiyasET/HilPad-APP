@@ -1,10 +1,15 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../models/user.dart';
 
 class AuthController extends GetxController {
-  var user = User().obs;
-  var token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjY2NTU0ODQ0fQ.78_7JOvRKiRgZE8sJd9dOmOY3juyCWyPT4yGpT3XSak".obs;
+  var token ="".obs;
+
+  AuthController(){
+    token.value = GetStorage().read("token").toString();
+  }
+
   @override
   void onInit() {
     super.onInit();
@@ -33,7 +38,8 @@ class AuthController extends GetxController {
   }
 
   signOut(){
-
+    token.value = "";
+    GetStorage().write("token", "");
   }
 
 }

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:hilpad/controller/AuthController.dart';
+import 'package:hilpad/models/token.dart';
 import 'package:hilpad/models/user.dart';
 import 'package:hilpad/screens/Home.dart';
 import 'package:hilpad/screens/HomePage.dart';
 import 'package:hilpad/services/ThemeService.dart';
+
+import '../components/snackbar.dart';
 
 class Login extends GetWidget<AuthController> {
   final TextEditingController emailController = TextEditingController();
@@ -96,15 +100,26 @@ class Login extends GetWidget<AuthController> {
                         width: double.infinity,
                         child: MaterialButton(
                           onPressed: () async{
-                            User u = User();
 
+                            SignIn s = SignIn();
+                            Response res = await s.hilpadPost(data: {
+                              "id":emailController.text,
+                              "password":passwordController.text
+                            });
+
+                            if(res.status.code == 200 && res.body["status"].toString() == "true"){
+                              Get.find<AuthController>().token.value = res.body["data"];
+                              GetStorage().write("token", res.body["data"]);
+                              customSnackBar(context, "Logged In", false);
+                            }else{
+                              customSnackBar(context, res.body["error"], true);
+                            }
                             //print(await getList(u));
-                            //print(await getItem(1, u));
+                            //print(await getItem(bm: SignIn()));
 
                             //controller.logIn(emailController.text, passwordController.text);
-                            Get.to(HomePage());
                           },
-                          child: Text('Login',
+                          child: const Text('Login',
                               style: TextStyle(color: Colors.white)),
                           color: Color(0xff28D8A1),
                           padding: EdgeInsets.symmetric(vertical: 15),

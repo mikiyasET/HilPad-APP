@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       initialBinding: AuthBinding(),
       routes: {
-        '/': (context) => Home(),
+        '/': (context) => const Home(),
         '/login': (context) => Login(),
         '/signup': (context) => Signup(),
       },

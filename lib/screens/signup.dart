@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:hilpad/components/snackbar.dart';
 import 'package:hilpad/controller/AuthController.dart';
+import 'package:hilpad/models/token.dart';
 import 'package:hilpad/services/ThemeService.dart';
 
 class Signup extends GetWidget<AuthController> {
@@ -93,8 +96,20 @@ class Signup extends GetWidget<AuthController> {
                       SizedBox(
                         width: double.infinity,
                         child: MaterialButton(
-                          onPressed: () => controller.createUser(
-                              emailController.text, passwordController.text),
+                          onPressed: () async {
+                            SignUp s = SignUp();
+                            Response res = await s.hilpadPost(data: {
+                              "id":emailController.text,
+                              "password":passwordController.text
+                            });
+
+                            if(res.status.code == 200 && res.body["status"].toString() == "true"){
+                              Get.back();
+                              customSnackBar(context, "Successfully Signed Up", false);
+                            }else{
+                              customSnackBar(context, res.body["error"], true);
+                            }
+                          },
                           child: Text('Sign Up',
                               style: TextStyle(color: Colors.white)),
                           color: Color(0xff28D8A1),
