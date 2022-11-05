@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:get/get_connect/http/src/response/response.dart';
+import 'package:dio/dio.dart';
 import 'package:hilpad/constants/api_constants.dart';
 import 'package:hilpad/models/basemodel.dart';
 
@@ -17,16 +17,17 @@ class User extends BaseModel {
 
   User(
       {this.id,
-        this.name,
-        this.username,
-        this.phone,
-        this.email,
-        this.status,
-        this.password,
-        this.idNo,
-        this.stuId}) : super(controller: user);
+      this.name,
+      this.username,
+      this.phone,
+      this.email,
+      this.status,
+      this.password,
+      this.idNo,
+      this.stuId})
+      : super(controller: user);
 
-  User.fromJson(Map<String, dynamic> json) :super(controller: user) {
+  User.fromJson(Map<String, dynamic> json) : super(controller: user) {
     id = json['id'];
     name = json['name'];
     username = json['username'];
@@ -52,33 +53,34 @@ class User extends BaseModel {
     data['stu_id'] = stuId;
     return data;
   }
-  
+
+
+  static List<User> baseModelToType(List<BaseModel> bm){
+    return bm.map((e) => e as User).toList();
+  }
 }
 
+Future<List<BaseModel>> getList(BaseModel bm,{String subPath = ""}) async {
+  Response c = await bm.hilpadGet(subPath: subPath);
+  var ddd = jsonEncode(c.data['data']);
+  print(jsonDecode(ddd));
 
-  Future<List> getList(BaseModel bm)async {
-    Response c = await bm.hilpadGet();
+  print(ddd);
+  var pro = (jsonDecode(ddd) as List).map((data) {
+    return Model.fromJson(data,bm.runtimeType);
+  }).toList();
+  return pro;
+}
 
-    print(c.body);
-    print(c.status);
-    print(c.headers);
-    print(c.request);
+Future getItem({int? userId, required BaseModel bm,String subPath = ""}) async {
+  Response c = await bm.hilpadGetById(id: userId,subPath: subPath);
 
-    var ddd=jsonDecode(c.body.data.toString());
-    var pro = (ddd as List).map((data) {return Model.fromJson(data);}).toList();
-    return pro;
-  }
+  print(c.data);
+  print(c.statusCode);
+  print(c.headers);
+  print(c.requestOptions);
 
-  Future getItem({int? userId, required BaseModel bm})async {
-    Response c = await bm.hilpadGetById(id: userId);
-
-    print(c.body);
-    print(c.status);
-    print(c.headers);
-    print(c.request);
-
-
-    var ddd=jsonDecode(c.body.data);
-    var pro =  Model.fromJson(ddd);
-    return pro;
-  }
+  var ddd = jsonEncode(c.data["data"]);
+  var pro = Model.fromJson(jsonDecode(ddd),bm.runtimeType);
+  return pro;
+}

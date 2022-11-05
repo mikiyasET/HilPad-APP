@@ -5,10 +5,14 @@ import 'package:hilpad/components/course_tile.dart';
 import 'package:hilpad/controller/AuthController.dart';
 import 'package:hilpad/controller/Controller.dart';
 import 'package:hilpad/controller/HomePage.dart';
+import 'package:hilpad/screens/courseFiles.dart';
+import 'package:hilpad/screens/examFiles.dart';
+import 'package:hilpad/screens/settings.dart';
 import 'package:hilpad/screens/shedule.dart';
 import 'package:hilpad/services/ThemeService.dart';
 
 class HomePage extends StatelessWidget {
+  final PageController controller = PageController();
   final HomePageController hc = Get.put(HomePageController());
   final Controller c = Get.put(Controller());
   final AuthController x = Get.put(AuthController());
@@ -20,31 +24,25 @@ class HomePage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         //drawer: const Drawer(),
-        appBar: AppBar(
-          title: const Text('HilPad'),
-          centerTitle: true,
-          actions: [
-            IconButton(onPressed: () => x.signOut(), icon: const Center(child: Icon(Icons.logout))),
-            GetBuilder<ThemeController>(
-              builder: (controller) => IconButton(
-                icon: Icon(
-                  controller.isDarkMode.value ? Icons.wb_sunny : Icons.dark_mode,
-                ),
-                onPressed: () => controller.toggleDarkMode(),
-              ),
-            )
-          ],
-        ),
-        body: const SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Schedule(),
+        body:  PageView(
+          controller: controller,
+            onPageChanged: (index) =>c.changePage(index),
+            children:   [
+              const SingleChildScrollView(physics: BouncingScrollPhysics(),child: Schedule()),
+              const SingleChildScrollView(physics: BouncingScrollPhysics(),child: CourseFilesPage()),
+              SingleChildScrollView(physics: const BouncingScrollPhysics(),child: ExamFilesPage()),
+              SingleChildScrollView(physics: const BouncingScrollPhysics(),child: SettingsPage()),
+            ]
         ),
         bottomNavigationBar: Obx(() => BottomNavyBar(
               selectedIndex: c.selectedIndex.value,
               showElevation: true,
               itemCornerRadius: 24,
               curve: Curves.easeIn,
-              onItemSelected: (index) => c.changePage(index),
+              onItemSelected: (index) {
+                c.changePage(index);
+                controller.jumpToPage(index);
+                },
               items: <BottomNavyBarItem>[
                 BottomNavyBarItem(
                   icon: const Icon(Icons.apps),

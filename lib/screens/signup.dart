@@ -1,7 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:get/instance_manager.dart';
 import 'package:hilpad/components/snackbar.dart';
 import 'package:hilpad/controller/AuthController.dart';
 import 'package:hilpad/models/token.dart';
@@ -103,11 +106,11 @@ class Signup extends GetWidget<AuthController> {
                               "password":passwordController.text
                             });
 
-                            if(res.status.code == 200 && res.body["status"].toString() == "true"){
+                            if(res.statusCode == 200 && res.data["status"].toString() == "true"){
                               Get.back();
                               customSnackBar(context, "Successfully Signed Up", false);
                             }else{
-                              customSnackBar(context, res.body["error"], true);
+                              customSnackBar(context, res.data["error"], true);
                             }
                           },
                           child: Text('Sign Up',

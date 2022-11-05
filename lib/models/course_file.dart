@@ -1,4 +1,10 @@
-class CourseFile {
+import 'dart:convert';
+
+import 'package:hilpad/constants/api_constants.dart';
+
+import 'basemodel.dart';
+
+class CourseFile extends BaseModel {
   int? id;
   int? courseId;
   String? fileId;
@@ -18,9 +24,9 @@ class CourseFile {
         this.year,
         this.fileType,
         this.season,
-        this.status});
+        this.status}) : super(controller: courseFile);
 
-  CourseFile.fromJson(Map<String, dynamic> json) {
+  CourseFile.fromJson(Map<String, dynamic> json) : super(controller: courseFile) {
     id = json['id'];
     courseId = json['course_id'];
     fileId = json['file_id'];
@@ -44,5 +50,10 @@ class CourseFile {
     data['season'] = season;
     data['status'] = status;
     return data;
+  }
+
+
+  static List<CourseFile> baseModelToType(List<BaseModel> bm){
+    return bm.map((e) => e as CourseFile).toList();
   }
 }

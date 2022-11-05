@@ -1,12 +1,18 @@
-class Course {
+import 'dart:convert';
+
+import 'package:hilpad/constants/api_constants.dart';
+
+import 'basemodel.dart';
+
+class Course extends BaseModel{
   int? id;
   String? name;
   String? code;
   int? creditHour;
 
-  Course({this.id, this.name, this.code, this.creditHour});
+  Course({this.id, this.name, this.code, this.creditHour}) : super(controller: course);
 
-  Course.fromJson(Map<String, dynamic> json) {
+  Course.fromJson(Map<String, dynamic> json) : super(controller: course) {
     id = json['id'];
     name = json['name'];
     code = json['code'];
@@ -21,4 +27,9 @@ class Course {
     data['credit_hour'] = creditHour;
     return data;
   }
+
+  static List<Course> baseModelToType(List<BaseModel> bm){
+    return bm.map((e) => e as Course).toList();
+  }
+
 }
