@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:hilpad/models/batch.dart';
@@ -14,20 +15,26 @@ import '../controller/AuthController.dart';
 
 class BaseModel {
   String controller;
+  final DioCacheManager _dioCacheManager = DioCacheManager(CacheConfig());
+  final Options _cacheOptions = buildCacheOptions(const Duration(days: 20));
+
   static Dio dio = Dio(
       BaseOptions(
           baseUrl: hilPadBaseUrl,
           headers: {"Authorization":"bearer ${Get.find<AuthController>().token.value}"},
       )
   );
-  BaseModel({required this.controller});
 
-  Future<Response> hilpadGet({String subPath = ""}) => dio.get("$controller/$subPath");
-  Future<Response> hilpadDelete({required int id}) => dio.get('$controller/$id');
-  Future<Response> hilpadGetById({int? id,String subPath = ""}) => dio.get('$controller/$subPath/${id ?? ""}');
-  Future<Response> hilpadPost({required Map data}) => dio.post(controller,data: data);
-  Future<Response> hilpadPatch({required Map data, required int id}) => dio.patch('$controller/$id',data: data);
-  Future<Response> hilpadPut({required Map data}) => dio.put(controller,data: data);
+  BaseModel({required this.controller}){
+    dio.interceptors.add(_dioCacheManager.interceptor);
+  }
+
+  Future<Response> hilpadGet({String subPath = ""}) => dio.get("$controller/$subPath",options: _cacheOptions);
+  Future<Response> hilpadDelete({required int id}) => dio.get('$controller/$id',options: _cacheOptions);
+  Future<Response> hilpadGetById({int? id,String subPath = ""}) => dio.get('$controller/$subPath/${id ?? ""}',options: _cacheOptions);
+  Future<Response> hilpadPost({required Map data}) => dio.post(controller,data: data,options: _cacheOptions);
+  Future<Response> hilpadPatch({required Map data, required int id}) => dio.patch('$controller/$id',data: data,options: _cacheOptions);
+  Future<Response> hilpadPut({required Map data}) => dio.put(controller,data: data,options: _cacheOptions);
 
 }
 

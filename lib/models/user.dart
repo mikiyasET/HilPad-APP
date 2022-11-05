@@ -63,9 +63,6 @@ class User extends BaseModel {
 Future<List<BaseModel>> getList(BaseModel bm,{String subPath = ""}) async {
   Response c = await bm.hilpadGet(subPath: subPath);
   var ddd = jsonEncode(c.data['data']);
-  print(jsonDecode(ddd));
-
-  print(ddd);
   var pro = (jsonDecode(ddd) as List).map((data) {
     return Model.fromJson(data,bm.runtimeType);
   }).toList();
@@ -74,11 +71,6 @@ Future<List<BaseModel>> getList(BaseModel bm,{String subPath = ""}) async {
 
 Future getItem({int? userId, required BaseModel bm,String subPath = ""}) async {
   Response c = await bm.hilpadGetById(id: userId,subPath: subPath);
-
-  print(c.data);
-  print(c.statusCode);
-  print(c.headers);
-  print(c.requestOptions);
 
   var ddd = jsonEncode(c.data["data"]);
   var pro = Model.fromJson(jsonDecode(ddd),bm.runtimeType);
