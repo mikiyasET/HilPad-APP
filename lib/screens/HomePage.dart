@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
           controller: controller,
             onPageChanged: (index) =>c.changePage(index),
             children:   [
-              const SingleChildScrollView(physics: BouncingScrollPhysics(),child: Schedule()),
+              SingleChildScrollView(physics: const BouncingScrollPhysics(),child: Schedule()),
               SingleChildScrollView(physics: const BouncingScrollPhysics(),child: CourseFilesPage()),
               SingleChildScrollView(physics: const BouncingScrollPhysics(),child: ExamFilesPage()),
               SingleChildScrollView(physics: const BouncingScrollPhysics(),child: SettingsPage()),

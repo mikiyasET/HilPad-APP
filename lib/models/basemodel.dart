@@ -5,6 +5,7 @@ import 'package:get/get_instance/get_instance.dart';
 import 'package:hilpad/models/batch.dart';
 import 'package:hilpad/models/course.dart';
 import 'package:hilpad/models/course_file.dart';
+import 'package:hilpad/models/schedule.dart';
 import 'package:hilpad/models/student.dart';
 import 'package:hilpad/models/student_data.dart';
 import 'package:hilpad/models/token.dart';
@@ -16,7 +17,8 @@ import '../controller/AuthController.dart';
 class BaseModel {
   String controller;
   final DioCacheManager _dioCacheManager = DioCacheManager(CacheConfig());
-  final Options _cacheOptions = buildCacheOptions(const Duration(days: 20));
+  //final Options _cacheOptions = buildCacheOptions(const Duration(days: 20));
+  final Options? _cacheOptions = null;
 
   static Dio dio = Dio(
       BaseOptions(
@@ -58,6 +60,8 @@ abstract class Model {
         return SignIn.fromJson(json);
       case SignUp:
         return SignUp.fromJson(json);
+      case ScheduleModel:
+        return ScheduleModel.fromJson(json);
       default:
         throw UnimplementedError();
     }

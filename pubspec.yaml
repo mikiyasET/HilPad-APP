@@ -16,6 +16,8 @@ dependencies:
   bottom_navy_bar:
   dio: ^4.0.6
   dio_http_cache: ^0.3.0
+  intl: ^0.17.0
+  path_provider: ^2.0.11
   flutter_signin_button: ^2.0.0
 
 

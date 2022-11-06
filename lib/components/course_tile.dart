@@ -18,7 +18,7 @@ class ScheduleCourseTile extends StatelessWidget {
           flex: 7,
           child: Container(
             decoration: BoxDecoration(
-                color: Colors.black,
+                color: Colors.blue,
                 borderRadius: BorderRadius.circular(20)),
             margin: const EdgeInsets.only(left: 10,right: 10,bottom: 10),
             padding: const EdgeInsets.only(top: 20,bottom: 10,left: 5),
@@ -38,7 +38,7 @@ class ScheduleCourseTile extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 30.0,top:isBreak? 10 : 25,bottom: 20),
-                  child: Text(time,style: TextStyle(color: isBreak? Colors.grey : color,fontSize:isBreak? 20 : 15,fontWeight: isBreak? FontWeight.w400 :FontWeight.w500)),
+                  child: Text(time,style: TextStyle(color: isBreak? color.withOpacity(0.6) : color,fontSize:isBreak? 20 : 15,fontWeight: isBreak? FontWeight.w400 :FontWeight.w500)),
                 ),
               ],
             ),

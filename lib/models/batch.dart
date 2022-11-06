@@ -30,6 +30,9 @@ class Batch extends BaseModel{
 
 
   static List<Batch> baseModelToType(List<BaseModel> bm){
-    return bm.map((e) => e as Batch).toList();
+    return bm.map((e){
+      print((e as Batch).code);
+      return e as Batch;
+    }).toList();
   }
 }

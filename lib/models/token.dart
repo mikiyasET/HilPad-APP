@@ -17,3 +17,12 @@ class SignIn extends BaseModel{
     token = json.toString();
   }
 }
+
+class DownLoad extends BaseModel{
+  String? token;
+  String subUrl;
+  DownLoad({required this.subUrl}) : super(controller: subUrl);
+  DownLoad.fromJson(Map<String, dynamic> json,{required this.subUrl}) : super(controller: subUrl) {
+    token = json.toString();
+  }
+}
