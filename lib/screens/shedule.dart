@@ -12,7 +12,7 @@ import '../models/user.dart';
 
 class Schedule extends StatelessWidget {
   Schedule({Key? key}) : super(key: key);
-  var day = 1.obs;
+  var day = 0.obs;
   var date = DateTime.now().obs;
   final c = Get.find<Controller>();
 
@@ -38,6 +38,8 @@ class Schedule extends StatelessWidget {
 
                   List<ScheduleModel> scheduleData = ScheduleModel.baseModelToType(snapshot.data[0]);
                   List<Batch> batchData = Batch.baseModelToType(snapshot.data[1]);
+                  c.currentBatch.value = batchData[0].code!;
+                  c.currentBatchID.value = batchData[0].id!;
                   List<Course> courseData = Course.baseModelToType(snapshot.data[2]);
 
                   return Column(

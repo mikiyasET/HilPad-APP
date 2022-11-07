@@ -14,6 +14,7 @@ import 'package:hilpad/models/course.dart';
 import 'package:hilpad/models/course_file.dart';
 import 'package:hilpad/models/token.dart';
 import 'package:hilpad/models/user.dart';
+import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../models/basemodel.dart';
@@ -176,10 +177,16 @@ class CourseFilesPage extends StatelessWidget {
 
 class FileTile extends StatelessWidget {
   final CourseFile file;
-  FileTile({Key? key,required this.file}) : super(key: key);
+  FileTile({Key? key,required this.file}) : super(key: key){
+    fe();
+  }
+
+  fe() async{
+    isDownloaded.value = await fileExists(file.fileName)!= null;
+  }
 
   var downloading = false.obs;
-  var progress = '0'.obs;
+  var progress = 0.0.obs;
   var isDownloaded = false.obs;
 
   @override
@@ -188,40 +195,38 @@ class FileTile extends StatelessWidget {
       children: [
         InkWell(
           onTap: () async {
-            print("hereeeeeeeeeeeeeeeeeeeeeee");
-            var d = DownLoad(subUrl: "api");
-            Response p = await d.hilpadGet(subPath: "link/course/2");
-            String downloadKey = p.data["data"];
-            print(downloadKey);
-
-            //Response dio = await Dio().download(hilPadBaseUrl+"download/$downloadKey", getFilePath(downloadKey));
-            //String res = dio.data[""];
-
-
-
-
-            Dio().download(
-              hilPadBaseUrl+"download/$downloadKey",
-              await getFilePath(downloadKey),
-              onReceiveProgress: (rcv, total) {
-                print('received: ${rcv.toStringAsFixed(0)} out of total: ${total.toStringAsFixed(0)}');
-
-                progress.value = ((rcv / total) * 100).toStringAsFixed(0);
-
-
-                if (progress.value == '100') {
+            //file Exists
+            String? path = await fileExists(file.fileName);
+            if(await fileExists(file.fileName) != null){
+              OpenFile.open(path);
+              //isDownloaded.value = true;
+            }
+            else{
+              var d = DownLoad(subUrl: "api");
+              Response p = await d.hilpadGet(subPath: "link/course/${file.id}");
+              String downloadKey = p.data["data"];
+              print(downloadKey);
+              Dio().download(
+                hilPadBaseUrl+"download/$downloadKey",
+                await getFilePath(downloadKey),
+                onReceiveProgress: (rcv, total) {
+                  print(progress.value);
+                  downloading.value = true;
+                  progress.value = (rcv / total);
+                  if (progress.value == 1) {
                     isDownloaded.value = true;
-                } else if (double.parse(progress.value) < 100) {}
-              },
-              deleteOnError: true,
-            ).then((_) {
-                if (progress.value == '100') {
+                  } else if (progress.value < 1) {
+
+                  }
+                },
+                deleteOnError: true,
+              ).then((_) {
+                if (progress.value == 1) {
                   isDownloaded.value = true;
                 }
                 downloading.value = false;
-            });
-
-
+              });
+            }
           },
           child: Container(
             decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(10)),
@@ -244,10 +249,14 @@ class FileTile extends StatelessWidget {
                       Text(file.fileName.toString(),maxLines: 2,overflow: TextOverflow.ellipsis,style: const TextStyle(height: 1.5,color: Color(0xff192252),fontWeight: FontWeight.w600,fontSize: 15),),
                       const Spacer(),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text("${file.year} ${file.season}",style: const TextStyle(color: Color(0xff8d97b2),fontSize: 12)),
-                          Obx(() => Text(progress.toString(),style: const TextStyle(color: Color(0xff8d97b2),fontSize: 12))),
+                          Obx(() => isDownloaded.value?
+                          const Icon(Icons.verified,color: Colors.green,) :
+                          downloading.value ?
+                          SizedBox(height: 25,width: 25,child: CircularProgressIndicator(backgroundColor: Colors.grey,valueColor: const AlwaysStoppedAnimation(Colors.green),strokeWidth: 3,value: progress.value,)) :
+                          const Text("Download",style: TextStyle(color: Colors.blue,fontSize: 12))),
                         ],
                       ),
                     ],),
@@ -263,14 +272,22 @@ class FileTile extends StatelessWidget {
 
 
 
-  Future<String> getFilePath(uniqueFileName) async {
+  Future<String> getFilePath(String uniqueFileName) async {
     String path = '';
-
     Directory dir = await getApplicationDocumentsDirectory();
-
-    path = '${dir.path}/$uniqueFileName';
-    print(path);
+    path = '${dir.path}/${uniqueFileName.substring(37,uniqueFileName.length)}';
     return path;
+  }
+
+  Future<String?> fileExists(String? fileName) async {
+    String dir = (await getApplicationDocumentsDirectory()).path;
+    String savePath = '$dir/$fileName';
+
+    if (await File(savePath).exists()) {
+      return savePath;
+    } else {
+      return null;
+    }
   }
 
 }

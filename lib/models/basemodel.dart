@@ -17,10 +17,10 @@ import '../controller/AuthController.dart';
 class BaseModel {
   String controller;
   final DioCacheManager _dioCacheManager = DioCacheManager(CacheConfig());
-  //final Options _cacheOptions = buildCacheOptions(const Duration(days: 20));
-  final Options? _cacheOptions = null;
+  final Options _cacheOptions = buildCacheOptions(const Duration(days: 20),forceRefresh: true);
+  //final Options? _cacheOptions = null;
 
-  static Dio dio = Dio(
+  Dio dio = Dio(
       BaseOptions(
           baseUrl: hilPadBaseUrl,
           headers: {"Authorization":"bearer ${Get.find<AuthController>().token.value}"},
