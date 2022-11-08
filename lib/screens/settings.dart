@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:hilpad/utils/universal_helper_functions.dart';
 import '../controller/AuthController.dart';
-import '../models/basemodel.dart';
-import '../models/course.dart';
-import '../models/student.dart';
 import '../models/user.dart';
 import '../services/ThemeService.dart';
 
@@ -35,18 +32,11 @@ class SettingsPage extends StatelessWidget {
           ),
           const SizedBox(height: 180,),
 
-
           FutureBuilder(
             future: getItem(bm: User(),subPath: "token"),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-              if(snapshot.connectionState == ConnectionState.waiting){
-                return const Center(child: CircularProgressIndicator(),);
-              }
-
-              //print(snapshot.data);
-              if(snapshot.data != null){
+              return futureBuilderBase(context, snapshot, body: Builder(builder: (BuildContext context){
                 User userData = snapshot.data as User;
-
                 return Container(
                   padding: const EdgeInsets.only(left: 10,right: 10,top: 30,bottom: 80),
                   width: Get.size.width,
@@ -122,10 +112,7 @@ class SettingsPage extends StatelessWidget {
                     ],
                   ),
                 );
-
-              }else{
-                return const Text("NO Data To Display");
-              }
+              }));
             },
           ),
 
