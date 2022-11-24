@@ -1,121 +1,183 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:hilpad/utils/universal_helper_functions.dart';
+
 import '../controller/AuthController.dart';
-import '../models/user.dart';
 import '../services/ThemeService.dart';
 
 class SettingsPage extends StatelessWidget {
   SettingsPage({Key? key}) : super(key: key);
   final AuthController x = Get.find<AuthController>();
+  final ThemeController tc = Get.put(ThemeController());
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.grey.withOpacity(0.2),
-      child: Column(
-        children: [
-          AppBar(
-            title: const Text('HilPad'),
-            centerTitle: true,
-            actions: [
-              IconButton(onPressed: () => x.signOut(), icon: const Center(child: Icon(Icons.logout))),
-              GetBuilder<ThemeController>(
-                builder: (controller) => IconButton(
-                  icon: Icon(
-                    controller.isDarkMode.value ? Icons.wb_sunny : Icons.dark_mode,
-                  ),
-                  onPressed: () => controller.toggleDarkMode(),
-                ),
-              )
-            ],
-          ),
-          const SizedBox(height: 180,),
-
-          FutureBuilder(
-            future: getItem(bm: User(),subPath: "token"),
-            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-              return futureBuilderBase(context, snapshot, body: Builder(builder: (BuildContext context){
-                User userData = snapshot.data as User;
-                return Container(
-                  padding: const EdgeInsets.only(left: 10,right: 10,top: 30,bottom: 80),
-                  width: Get.size.width,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(40)
-                  ),
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Positioned(
-                        top: -120,
-                        left: 100,
-                        child: Container(
-                          width: 160,
-                          height: 150,
-                          decoration: BoxDecoration(
-                              color: Colors.blue,
-                              borderRadius: BorderRadius.circular(40)
-                          ),
-                        ),
+    return SizedBox(
+      height: MediaQuery.of(context).size.height,
+      child: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(100),
+              child: Container(
+                width: double.infinity,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                          color: tc.isDarkMode.value
+                              ? Theme.of(context).scaffoldBackgroundColor
+                              : Colors.redAccent,
+                          borderRadius: BorderRadius.circular(70)),
+                      child: Center(
+                        child: Text("M",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 30)),
                       ),
-                      Column(
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 60),
-                          Text("${userData.name}(${userData.idNo})".toString(),style: const TextStyle(fontSize: 26,fontWeight: FontWeight.w600),),
-                          const SizedBox(height: 15,),
-                          Text("${userData.username}  ${userData.email}",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400),),
-                          Text("${userData.phone}",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400),),
-
-                          const SizedBox(height: 20,),
-
+                          Text(
+                            'DRB2001',
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold),
+                          ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Container(
-                                margin: const EdgeInsets.only(right: 15),
-                                width: 107,
-                                height: 90,
-                                decoration: BoxDecoration(
-                                    color: Color(0xfffcf1d5),
-                                    borderRadius: BorderRadius.circular(20)
+                              Text(
+                                'Mikiyas Lemlemu',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 19,
                                 ),
                               ),
-                              Container(
-                                margin: const EdgeInsets.only(right: 15),
-                                width: 107,
-                                height: 90,
-                                decoration: BoxDecoration(
-                                    color: Color(0xfffcf1d5),
-                                    borderRadius: BorderRadius.circular(20)
-                                ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(),
-                                width: 107,
-                                height: 90,
-                                decoration: BoxDecoration(
-                                    color: Color(0xfffcf1d5),
-                                    borderRadius: BorderRadius.circular(20)
-                                ),
-                              ),
+                              SizedBox(width: 6),
+                              Icon(
+                                Icons.verified,
+                                color: tc.isDarkMode.value
+                                    ? Colors.blue
+                                    : Colors.white,
+                                size: 18,
+                              )
                             ],
                           ),
-
-                          SizedBox(height: 50,),
-                          Text("Additional Settings",style: TextStyle(fontSize: 26,fontWeight: FontWeight.w600),),
-
-
-                          SizedBox(height: 100,)
                         ],
                       ),
-                    ],
-                  ),
-                );
-              }));
-            },
+                    ),
+                    Spacer(),
+                    Material(
+                      elevation: tc.isDarkMode.value ? 0 : 0,
+                      color: tc.isDarkMode.value
+                          ? Theme.of(context).scaffoldBackgroundColor
+                          : Colors.redAccent,
+                      borderRadius: BorderRadius.circular(10),
+                      child: IconButton(
+                          onPressed: () {},
+                          icon:
+                              Icon(Icons.edit, size: 20, color: Colors.white)),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            pinned: true,
+            backgroundColor: Theme.of(context).secondaryHeaderColor,
+            expandedHeight: 180,
+            title: Padding(
+              padding: const EdgeInsets.only(left: 10, top: 20),
+              child: Text("Settings"),
+            ),
+            titleTextStyle: const TextStyle(
+                color: Colors.white, fontSize: 27, fontWeight: FontWeight.bold),
           ),
-
+          SliverToBoxAdapter(
+            child: Container(
+              height: MediaQuery.of(context).size.height - 265,
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Column(
+                children: [
+                  const ListTile(
+                    title: Text(
+                      'Connect to Telegram',
+                      style:
+                          TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                    ),
+                    trailing: Icon(Icons.cloud_done_rounded, size: 14),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                  ),
+                  const Divider(),
+                  ListTile(
+                    onTap: () => Get.toNamed("/changeBatch"),
+                    title: Text(
+                      'Change Batch',
+                      style:
+                          TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                    ),
+                    trailing: Icon(Icons.arrow_forward_ios, size: 14),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                  ),
+                  Divider(),
+                  ListTile(
+                    onTap: () {
+                      Get.toNamed('/changePassword');
+                    },
+                    title: const Text(
+                      'Change Password',
+                      style:
+                          TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                    ),
+                    trailing: Icon(Icons.arrow_forward_ios, size: 14),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                  ),
+                  const Divider(),
+                  ListTile(
+                    title: const Text(
+                      "Dark Mode",
+                      style:
+                          TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                    ),
+                    trailing: Switch(
+                        activeColor: Theme.of(context).primaryColor,
+                        value: tc.isDarkMode.value,
+                        onChanged: (value) {
+                          tc.toggleDarkMode();
+                          SystemChrome.setSystemUIOverlayStyle(
+                            SystemUiOverlayStyle(
+                                statusBarColor: tc.isDarkMode.value
+                                    ? Theme.of(context).primaryColorDark
+                                    : Theme.of(context).primaryColor),
+                          );
+                        }),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                    ),
+                  ),
+                  const Spacer(),
+                  ListTile(
+                    onTap: () => x.signOut(),
+                    title: const Text(
+                      'Sign Out',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                          color: Colors.redAccent),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                  ),
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );

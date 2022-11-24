@@ -17,32 +17,39 @@ import '../controller/AuthController.dart';
 class BaseModel {
   String controller;
   final DioCacheManager _dioCacheManager = DioCacheManager(CacheConfig());
-  final Options _cacheOptions = buildCacheOptions(const Duration(days: 20),forceRefresh: true);
+  final Options _cacheOptions =
+      buildCacheOptions(const Duration(days: 20), forceRefresh: true);
   //final Options? _cacheOptions = null;
 
-  Dio dio = Dio(
-      BaseOptions(
-          baseUrl: hilPadBaseUrl,
-          headers: {"Authorization":"bearer ${Get.find<AuthController>().token.value}"},
-      )
-  );
+  Dio dio = Dio(BaseOptions(
+    baseUrl: hilPadBaseUrl,
+    headers: {
+      "Authorization": "bearer ${Get.find<AuthController>().token.value}"
+    },
+  ));
 
-  BaseModel({required this.controller}){
+  BaseModel({required this.controller}) {
     dio.interceptors.add(_dioCacheManager.interceptor);
   }
 
-  Future<Response> hilpadGet({String subPath = ""}) => dio.get("$controller/$subPath",options: _cacheOptions);
-  Future<Response> hilpadDelete({required int id}) => dio.get('$controller/$id',options: _cacheOptions);
-  Future<Response> hilpadGetById({int? id,String subPath = ""}) => dio.get('$controller/$subPath/${id ?? ""}',options: _cacheOptions);
-  Future<Response> hilpadPost({required Map data}) => dio.post(controller,data: data,options: _cacheOptions);
-  Future<Response> hilpadPatch({required Map data, required int id}) => dio.patch('$controller/$id',data: data,options: _cacheOptions);
-  Future<Response> hilpadPut({required Map data}) => dio.put(controller,data: data,options: _cacheOptions);
-
+  Future<Response> hilpadGet({String subPath = ""}) =>
+      dio.get("$controller/$subPath", options: _cacheOptions);
+  Future<Response> hilpadDelete({required int id}) =>
+      dio.delete('$controller/$id', options: _cacheOptions);
+  Future<Response> hilpadGetById({int? id, String subPath = ""}) =>
+      dio.get('$controller/$subPath/${id ?? ""}', options: _cacheOptions);
+  Future<Response> hilpadPost({required Map data}) =>
+      dio.post(controller, data: data, options: _cacheOptions);
+  Future<Response> hilpadPatch({required Map data, required int id}) =>
+      dio.patch('$controller/$id', data: data, options: _cacheOptions);
+  Future<Response> hilpadPut({required Map data}) =>
+      dio.put(controller, data: data, options: _cacheOptions);
 }
 
 abstract class Model {
   // Not DRY, but this works.
-  static BaseModel fromJson<T extends Model>(Map<String, dynamic> json,Type type) {
+  static BaseModel fromJson<T extends Model>(
+      Map<String, dynamic> json, Type type) {
     switch (type) {
       case Student:
         return Student.fromJson(json);
@@ -66,5 +73,6 @@ abstract class Model {
         throw UnimplementedError();
     }
   }
+
   Map<String, dynamic> toJson();
 }

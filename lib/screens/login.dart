@@ -43,7 +43,8 @@ class Login extends GetWidget<AuthController> {
             ),
             Obx(
               () => Container(
-                padding: const EdgeInsets.symmetric(horizontal: 35.0, vertical: 0.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 35.0, vertical: 0.0),
                 child: Center(
                   child: Column(
                     children: [
@@ -56,15 +57,17 @@ class Login extends GetWidget<AuthController> {
                       ),
                       TextFormField(
                         decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(vertical: 15),
-                          prefixIcon: const Icon(Icons.email_outlined),
+                          contentPadding:
+                              const EdgeInsets.symmetric(vertical: 15),
+                          prefixIcon: const Icon(Icons.grid_3x3),
                           border: UnderlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
                             borderSide: BorderSide.none,
                           ),
-                          hintText: "Email",
-                          fillColor:
-                              tc.isDarkMode.value ? const Color(0xff212121) : null,
+                          hintText: "ID",
+                          fillColor: tc.isDarkMode.value
+                              ? const Color(0xff212121)
+                              : null,
                           filled: true,
                           hintStyle: tc.isDarkMode.value
                               ? const TextStyle(color: Colors.white)
@@ -78,15 +81,17 @@ class Login extends GetWidget<AuthController> {
                       const SizedBox(height: 15),
                       TextFormField(
                         decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(vertical: 15),
+                          contentPadding:
+                              const EdgeInsets.symmetric(vertical: 15),
                           prefixIcon: const Icon(Icons.lock_outline),
                           border: UnderlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
                             borderSide: BorderSide.none,
                           ),
                           hintText: 'Password',
-                          fillColor:
-                              tc.isDarkMode.value ? const Color(0xff212121) : null,
+                          fillColor: tc.isDarkMode.value
+                              ? const Color(0xff212121)
+                              : null,
                           filled: true,
                           hintStyle: tc.isDarkMode.value
                               ? const TextStyle(color: Colors.white)
@@ -101,19 +106,21 @@ class Login extends GetWidget<AuthController> {
                       SizedBox(
                         width: double.infinity,
                         child: MaterialButton(
-                          onPressed: () async{
-
+                          onPressed: () async {
                             SignIn s = SignIn();
                             Response res = await s.hilpadPost(data: {
-                              "id":emailController.text,
-                              "password":passwordController.text
+                              "id": emailController.text,
+                              "password": passwordController.text
                             });
 
-                            if(res.statusCode == 200 && res.data["status"].toString() == "true"){
-                              Get.find<AuthController>().token.value = res.data["data"];
+                            if (res.statusCode == 200 &&
+                                res.data["status"].toString() == "true") {
+                              Get.find<AuthController>().token.value =
+                                  res.data["data"];
                               GetStorage().write("token", res.data["data"]);
                               customSnackBar(context, "Logged In", false);
-                            }else{
+                            } else {
+                              print(res.data["error"]);
                               customSnackBar(context, res.data["error"], true);
                               //GetStorage().write("token", "dummyData");
                               //Get.find<AuthController>().token.value = "dummyData";
@@ -145,7 +152,7 @@ class Login extends GetWidget<AuthController> {
                         child: SignInButton(
                           Buttons.Google,
                           padding: const EdgeInsets.symmetric(vertical: 10),
-                          onPressed: (){},
+                          onPressed: () {},
                         ),
                       ),
                     ],

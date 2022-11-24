@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:hilpad/Bindings/AuthBinding.dart';
 import 'package:hilpad/screens/Home.dart';
+import 'package:hilpad/screens/changeBatch.dart';
+import 'package:hilpad/screens/changePassword.dart';
 import 'package:hilpad/screens/login.dart';
 import 'package:hilpad/screens/signup.dart';
 import 'package:hilpad/services/ThemeService.dart';
@@ -25,6 +27,8 @@ class MyApp extends StatelessWidget {
         '/': (context) => const Home(),
         '/login': (context) => Login(),
         '/signup': (context) => Signup(),
+        '/changePassword': (context) => ChangePassword(),
+        '/changeBatch': (context) => ChangeBatch()
       },
       title: 'HilPad',
       theme: Themes.light,

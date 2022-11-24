@@ -1,22 +1,13 @@
-import 'dart:io';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:hilpad/components/search_bar.dart';
-import 'package:hilpad/constants/api_constants.dart';
 import 'package:hilpad/controller/Controller.dart';
-import 'package:hilpad/models/batch.dart';
 import 'package:hilpad/models/course.dart';
 import 'package:hilpad/models/course_file.dart';
-import 'package:hilpad/models/token.dart';
-import 'package:hilpad/models/user.dart';
 import 'package:hilpad/utils/universal_helper_functions.dart';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
 
 import '../components/file_tile.dart';
 import '../models/basemodel.dart';
@@ -25,8 +16,16 @@ class CourseFilesPage extends StatelessWidget {
   CourseFilesPage({Key? key}) : super(key: key);
   final c = Get.find<Controller>();
 
-  var batchCourses = getList(Course(),subPath: Get.find<Controller>().currentBatch.value == ""? "" : "batch/${Get.find<Controller>().currentBatch}").obs;
-  var courseFilesFuture = getList(CourseFile(),subPath: Get.find<Controller>().currentCourse.value ==""? "" : "course/${Get.find<Controller>().currentCourse}").obs;
+  var batchCourses = getList(Course(),
+          subPath: Get.find<Controller>().currentBatch.value == ""
+              ? ""
+              : "batch/${Get.find<Controller>().currentBatch}")
+      .obs;
+  var courseFilesFuture = getList(CourseFile(),
+          subPath: Get.find<Controller>().currentCourse.value == ""
+              ? ""
+              : "course/${Get.find<Controller>().currentCourse}")
+      .obs;
 
   @override
   Widget build(BuildContext context) {
@@ -37,119 +36,31 @@ class CourseFilesPage extends StatelessWidget {
         children: [
           const SearchBar(),
           //Batch Grid
-          const SizedBox(height: 15,),
-          FutureBuilder<List<BaseModel>>(
-            future: getList(Batch()),
-            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-              return futureBuilderBase(context, snapshot,
-                  body: Builder(builder: (BuildContext context) {
-                    List<Batch> batchData = Batch.baseModelToType(snapshot.data);
-                    return SizedBox(
-                      height: 40,
-                      child: ListView.builder(
-                        padding: const EdgeInsets.only(left: 25,right: 25),
-                        itemCount: batchData.length,
-                        primary: false,
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        physics: const BouncingScrollPhysics(),
-                        itemBuilder: (BuildContext context, int index) {
-                          return InkWell(
-                            onTap: (){
-                              c.currentBatch.value = batchData[index].code.toString();
-                              batchCourses.value = getList(Course(),subPath: "batch/${c.currentBatch}");
-                            },
-                            child: Obx(() => Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
-                              margin: const EdgeInsets.only(right: 10),
-                              child: Text("${batchData[index].code}",
-                                style: TextStyle(
-                                    color: batchData[index].code.toString() == c.currentBatch.value ? Colors.white : const Color(0xff848fac),
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400
-                                ),),
-                              decoration: BoxDecoration(
-                                  color: batchData[index].code.toString() == c.currentBatch.value ? const Color(0xff082c81) : Colors.white,
-                                  borderRadius: BorderRadius.circular(5)
-                              ),
-                            )),
-                          );
-                        },),
-                    );
-                  },));
-            },
+          const SizedBox(
+            height: 15,
           ),
 
-          //Course Grid
-          const Padding(
-            padding: EdgeInsets.only(left: 25.0,top: 15,bottom: 15),
-            child: Text("Courses",style: TextStyle(fontSize: 19,fontWeight: FontWeight.w400),),
-          ),
           Obx(() => FutureBuilder<List<BaseModel>>(
-            future: batchCourses(),
-            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-              return futureBuilderBase(context, snapshot,body: Builder(builder: (BuildContext context) {
-                    List<Course> courseData = Course.baseModelToType(snapshot.data);
-                    return SizedBox(
-                      height: 110,
-                      child: ListView.builder(
-                        padding: const EdgeInsets.only(left: 25,right: 25),
-                        itemCount: courseData.length,
-                        primary: false,
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        physics: const BouncingScrollPhysics(),
-                        itemBuilder: (BuildContext context, int index) {
-                          return InkWell(
-                            onTap: (){
-                              c.currentCourse.value = courseData[index].id.toString();
-                              courseFilesFuture.value = getList(CourseFile(),subPath: "course/${c.currentCourse}");
-                            },
-                            child: Obx(() => Container(
-                              padding: const EdgeInsets.all(10),
-                              margin: const EdgeInsets.only(right: 25),
-                              width: 130,
-                              decoration: BoxDecoration(
-                                  color: courseData[index].id.toString() == c.currentCourse.value? Colors.blue : Colors.blue[100],
-                                  borderRadius: BorderRadius.circular(20)
-                              ),
-                              child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(courseData[index].code.toString(),style: const TextStyle(fontSize: 22,fontWeight: FontWeight.w600),),
-                                    Text(courseData[index].name.toString(),textAlign: TextAlign.center),
-                                  ]),
-                            )),
-                          );
-                        },),
+                future: courseFilesFuture.value,
+                builder:
+                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                  return futureBuilderBase(context, snapshot,
+                      body: Builder(builder: (BuildContext context) {
+                    List<CourseFile> courseFile =
+                        CourseFile.baseModelToType(snapshot.data);
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 25.0, right: 25),
+                      child: Column(
+                        children: courseFile
+                            .map((file) => FileTile(file: file))
+                            .toList(),
+                      ),
                     );
-                  },));
-            },
-          )),
-
-          //File Grid
-          const Padding(
-            padding: EdgeInsets.only(left: 25.0,top: 15,bottom: 15),
-            child: Text("Files",style: TextStyle(fontSize: 19,fontWeight: FontWeight.w400),),
-          ),
-          Obx(() => FutureBuilder<List<BaseModel>>(
-            future: courseFilesFuture.value,
-            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-              return futureBuilderBase(context, snapshot, body: Builder(builder: (BuildContext context){
-                List<CourseFile> courseFile = CourseFile.baseModelToType(snapshot.data);
-                return Padding(
-                  padding: const EdgeInsets.only(left: 25.0,right: 25),
-                  child: Column(
-                    children: courseFile.map((file) => FileTile(file: file)).toList(),
-                  ),
-                );
-              }));
-            },
-          )),
+                  }));
+                },
+              )),
         ],
       ),
     );
   }
 }
-

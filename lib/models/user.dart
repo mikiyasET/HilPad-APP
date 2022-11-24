@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:dio/dio.dart';
 import 'package:hilpad/constants/api_constants.dart';
 import 'package:hilpad/models/basemodel.dart';
 
@@ -54,25 +51,7 @@ class User extends BaseModel {
     return data;
   }
 
-
-  static List<User> baseModelToType(List<BaseModel> bm){
+  static List<User> baseModelToType(List<BaseModel> bm) {
     return bm.map((e) => e as User).toList();
   }
-}
-
-Future<List<BaseModel>> getList(BaseModel bm,{String subPath = ""}) async {
-  Response c = await bm.hilpadGet(subPath: subPath);
-  var ddd = jsonEncode(c.data['data']);
-  var pro = (jsonDecode(ddd) as List).map((data) {
-    return Model.fromJson(data,bm.runtimeType);
-  }).toList();
-  return pro;
-}
-
-Future getItem({int? userId, required BaseModel bm,String subPath = ""}) async {
-  Response c = await bm.hilpadGetById(id: userId,subPath: subPath);
-
-  var ddd = jsonEncode(c.data["data"]);
-  var pro = Model.fromJson(jsonDecode(ddd),bm.runtimeType);
-  return pro;
 }
