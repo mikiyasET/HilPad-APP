@@ -13,6 +13,10 @@ class Themes {
       accentColor: Colors.red,
       cardColor: Colors.red,
     ),
+    snackBarTheme: const SnackBarThemeData(
+      backgroundColor: Colors.red,
+      contentTextStyle: TextStyle(color: Colors.white),
+    ),
     backgroundColor: Colors.white,
     secondaryHeaderColor: Colors.red,
     primaryColor: Colors.red,
@@ -21,6 +25,10 @@ class Themes {
     brightness: Brightness.light,
   );
   static final dark = ThemeData.dark().copyWith(
+    snackBarTheme: const SnackBarThemeData(
+      backgroundColor: Color(0xff222325),
+      contentTextStyle: TextStyle(color: Colors.white),
+    ),
     scaffoldBackgroundColor: Color(0xff28292B), // 0XFF28292B
     backgroundColor: Color(0xff222325), // 0XFF0D0D0D
     secondaryHeaderColor: Color(0xff222325), // 0XFF212121

@@ -1,16 +1,15 @@
-import 'dart:convert';
-
 import 'package:hilpad/constants/api_constants.dart';
 
 import 'basemodel.dart';
 
-class Batch extends BaseModel{
+class Batch extends BaseModel {
   int? id;
   int? startYear;
   String? code;
   int? endYear;
 
-  Batch({this.id, this.endYear, this.code, this.startYear}) : super(controller: batch);
+  Batch({this.id, this.endYear, this.code, this.startYear})
+      : super(controller: batch);
 
   Batch.fromJson(Map<String, dynamic> json) : super(controller: batch) {
     id = json['id'];
@@ -20,7 +19,7 @@ class Batch extends BaseModel{
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  <String, dynamic>{};
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['end_year'] = endYear;
     data['code'] = code;
@@ -28,10 +27,8 @@ class Batch extends BaseModel{
     return data;
   }
 
-
-  static List<Batch> baseModelToType(List<BaseModel> bm){
-    return bm.map((e){
-      print((e as Batch).code);
+  static List<Batch> baseModelToType(List<BaseModel> bm) {
+    return bm.map((e) {
       return e as Batch;
     }).toList();
   }

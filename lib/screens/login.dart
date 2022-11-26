@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
@@ -120,7 +119,6 @@ class Login extends GetWidget<AuthController> {
                               GetStorage().write("token", res.data["data"]);
                               customSnackBar(context, "Logged In", false);
                             } else {
-                              print(res.data["error"]);
                               customSnackBar(context, res.data["error"], true);
                               //GetStorage().write("token", "dummyData");
                               //Get.find<AuthController>().token.value = "dummyData";
@@ -142,17 +140,6 @@ class Login extends GetWidget<AuthController> {
                         child: const Text(
                           'Signup',
                           style: TextStyle(color: Color(0xff28D8A1)),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      SizedBox(
-                        width: double.infinity,
-                        child: SignInButton(
-                          Buttons.Google,
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          onPressed: () {},
                         ),
                       ),
                     ],

@@ -43,6 +43,7 @@ Widget futureBuilderBase(BuildContext context, AsyncSnapshot<dynamic> snapshot,
   if (snapshot.data != null) {
     return body;
   } else {
+    print(snapshot);
     print(Get.find<AuthController>().token.value);
     return const Text("NO Data To Display");
   }

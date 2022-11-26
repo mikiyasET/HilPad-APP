@@ -10,6 +10,5 @@ class Controller extends GetxController {
   changePage(x) => selectedIndex.value = x;
   changeDay(x) {
     currentDay.value = x;
-    print("Day Changed: $x");
   }
 }

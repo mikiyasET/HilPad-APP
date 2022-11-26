@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
@@ -102,14 +101,16 @@ class Signup extends GetWidget<AuthController> {
                           onPressed: () async {
                             SignUp s = SignUp();
                             Response res = await s.hilpadPost(data: {
-                              "id":emailController.text,
-                              "password":passwordController.text
+                              "id": emailController.text,
+                              "password": passwordController.text
                             });
 
-                            if(res.statusCode == 200 && res.data["status"].toString() == "true"){
+                            if (res.statusCode == 200 &&
+                                res.data["status"].toString() == "true") {
                               Get.back();
-                              customSnackBar(context, "Successfully Signed Up", false);
-                            }else{
+                              customSnackBar(
+                                  context, "Successfully Signed Up", false);
+                            } else {
                               customSnackBar(context, res.data["error"], true);
                             }
                           },
@@ -125,18 +126,6 @@ class Signup extends GetWidget<AuthController> {
                         child: const Text(
                           'Login',
                           style: TextStyle(color: Color(0xff28D8A1)),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      SizedBox(
-                        width: double.infinity,
-                        child: SignInButton(
-                          Buttons.Google,
-                          text: 'Sign up with Google',
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          onPressed: (){},
                         ),
                       ),
                     ],

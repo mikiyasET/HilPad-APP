@@ -15,8 +15,7 @@ Widget Schedules(context, x, courses, selectedDay) {
   // final today_minute = DateFormat('m').format(DateTime.now());
   final today_day = DateFormat('d').format(DateTime.now());
   final today_name = DateFormat('EEEE').format(DateTime.now()).toLowerCase();
-  print(today_day);
-  print(selectedDay);
+  ;
   return DefaultTextStyle(
     style: TextStyle(
       color: Color(0xff9b9b9b),
@@ -271,12 +270,6 @@ isPeriod(periodTime) {
   } else {
     return 0; // No period
   }
-
-  print("\n-------------------------");
-  print("Current: $current");
-  print("start: $period_start");
-  print("end: $period_end");
-  print("-------------------------\n");
 }
 
 isDayPassed(today, pre) {

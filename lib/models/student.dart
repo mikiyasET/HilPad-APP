@@ -1,30 +1,31 @@
-import 'dart:convert';
-
 import 'package:hilpad/constants/api_constants.dart';
 
 import 'basemodel.dart';
 
-class Student extends BaseModel{
+class Student extends BaseModel {
   int? id;
   String? fname;
   String? lname;
   String? tgId;
   String? tgUsername;
   int? batch;
+  String? section;
   String? lang;
   int? studentDataID;
   bool? status;
 
   Student(
       {this.id,
-        this.fname,
-        this.lname,
-        this.tgId,
-        this.tgUsername,
-        this.batch,
-        this.lang,
-        this.studentDataID,
-        this.status}) : super(controller: student);
+      this.fname,
+      this.lname,
+      this.tgId,
+      this.tgUsername,
+      this.batch,
+      this.section,
+      this.lang,
+      this.studentDataID,
+      this.status})
+      : super(controller: student);
 
   Student.fromJson(Map<String, dynamic> json) : super(controller: student) {
     id = json['id'];
@@ -33,6 +34,7 @@ class Student extends BaseModel{
     tgId = json['tg_id'];
     tgUsername = json['tg_username'];
     batch = json['batch'];
+    section = json['section'];
     lang = json['lang'];
     studentDataID = json['studentDataID'];
     status = json['status'];
@@ -46,14 +48,14 @@ class Student extends BaseModel{
     data['tg_id'] = tgId;
     data['tg_username'] = tgUsername;
     data['batch'] = batch;
+    data['section'] = section;
     data['lang'] = lang;
     data['studentDataID'] = studentDataID;
     data['status'] = status;
     return data;
   }
 
-
-  static List<Student> baseModelToType(List<BaseModel> bm){
+  static List<Student> baseModelToType(List<BaseModel> bm) {
     return bm.map((e) => e as Student).toList();
   }
 }

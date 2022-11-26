@@ -37,7 +37,7 @@ class Schedule extends StatelessWidget {
                 builder: (BuildContext context) {
                   var x = ScheduleModel.baseModelToType(snapshot.data[0]);
                   var courses = Course.baseModelToType(snapshot.data[1]);
-                  print(c.currentDay.value);
+
                   if (x.length != 0) {
                     return Column(
                       mainAxisSize: MainAxisSize.min,
