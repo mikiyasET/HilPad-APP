@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
@@ -41,13 +42,8 @@ class FileTile extends StatelessWidget {
                           topLeft: Radius.circular(10)),
                       child: Container(
                         child: Center(
-                            child: Text(
-                          "${file.fileType.toString().split(".")[file.fileType.toString().split(".").length - 1]}",
-                          style: TextStyle(
-                              color: Theme.of(context).primaryColorLight,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 13),
-                        )),
+                          child: iconize(file.fileType),
+                        ),
                         height: 120,
                       ))),
               Expanded(
@@ -157,6 +153,26 @@ class FileTile extends StatelessWidget {
         print(e);
         Get.rawSnackbar(message: "Unable to download file.", instantInit: true);
       }
+    }
+  }
+
+  FaIcon iconize(name) {
+    name = file.fileType
+        .toString()
+        .split(".")[file.fileType.toString().split(".").length - 1];
+    name = name.split("/")[name.split("/").length - 1];
+    print(name);
+    switch (name) {
+      case "pdf":
+        return FaIcon(FontAwesomeIcons.filePdf);
+      case "document":
+        return FaIcon(FontAwesomeIcons.fileWord);
+      case "presentation":
+        return FaIcon(FontAwesomeIcons.filePowerpoint);
+      case "sheet":
+        return FaIcon(FontAwesomeIcons.fileExcel);
+      default:
+        return FaIcon(FontAwesomeIcons.file);
     }
   }
 
