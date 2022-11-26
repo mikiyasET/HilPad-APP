@@ -20,7 +20,7 @@ class Themes {
     backgroundColor: Colors.white,
     secondaryHeaderColor: Colors.red,
     primaryColor: Colors.red,
-    primaryColorLight: Colors.red,
+    primaryColorLight: Colors.black,
     primaryColorDark: Color(0xff222325),
     brightness: Brightness.light,
   );
@@ -33,7 +33,7 @@ class Themes {
     backgroundColor: Color(0xff222325), // 0XFF0D0D0D
     secondaryHeaderColor: Color(0xff222325), // 0XFF212121
     primaryColor: Colors.red,
-    primaryColorLight: Colors.red,
+    primaryColorLight: Colors.white,
     primaryColorDark: Colors.red,
     brightness: Brightness.dark,
   );

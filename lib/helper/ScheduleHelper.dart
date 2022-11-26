@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
 import 'package:hilpad/constants/Timing.dart';
+import 'package:hilpad/models/batch.dart';
+import 'package:hilpad/models/student.dart';
+import 'package:hilpad/models/user.dart';
 import 'package:hilpad/utils/universal_helper_functions.dart';
 import 'package:intl/intl.dart';
 
@@ -9,8 +12,12 @@ import '../models/schedule.dart';
 Future<dynamic>? ScheduleHelper() async {
   try {
     var date = DateTime.now().obs;
-    var schedule =
-        await getItemList(bm: ScheduleModel(), subPath: "batch/drb2001/a");
+    User user = await getItem(bm: User(), subPath: "token");
+    Student student = await getItem(bm: Student(), id: user.stuId);
+    Batch batch = await getItem(bm: Batch(), id: student.batch);
+    var schedule = await getItemList(
+        bm: ScheduleModel(),
+        subPath: "batch/${batch.code}/${student.section ?? "A"}");
     List<Course> courses = [];
     var today = DateFormat('EEEE').format(date.value);
     var filteredSchedule = schedule.where((element) {
@@ -30,8 +37,12 @@ Future<dynamic>? ScheduleHelper() async {
 
 Future<dynamic>? ScheduleHelperList() async {
   try {
-    var schedule =
-        await getItemList(bm: ScheduleModel(), subPath: "batch/drb2001/a");
+    User user = await getItem(bm: User(), subPath: "token");
+    Student student = await getItem(bm: Student(), id: user.stuId);
+    Batch batch = await getItem(bm: Batch(), id: student.batch);
+    var schedule = await getItemList(
+        bm: ScheduleModel(),
+        subPath: "batch/${batch.code}/${student.section ?? "A"}");
     List<Course> courses = [];
 
     for (var item in schedule) {

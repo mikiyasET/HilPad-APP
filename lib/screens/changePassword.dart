@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hilpad/screens/Widgets/Settings/PasswordField.dart';
 
 class ChangePassword extends StatelessWidget {
   const ChangePassword({Key? key}) : super(key: key);
@@ -9,6 +10,9 @@ class ChangePassword extends StatelessWidget {
     var _showPassword1 = false.obs;
     var _showPassword2 = false.obs;
     var _showPassword3 = false.obs;
+    TextEditingController _currentPassword = TextEditingController();
+    TextEditingController _newPassword = TextEditingController();
+    TextEditingController _confirmPassword = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         title: Text('Change Password'),
@@ -18,154 +22,25 @@ class ChangePassword extends StatelessWidget {
         child: Obx(
           () => Column(
             children: [
-              Stack(
-                children: [
-                  TextFormField(
-                    obscureText: _showPassword1.value ? false : true,
-                    style: TextStyle(
-                      fontSize: 17,
-                      height: 1.3,
-                      fontWeight: FontWeight.w700,
-                    ),
-                    cursorColor: Colors.teal,
-                    scrollPadding: EdgeInsets.only(left: 40.0),
-                    decoration: InputDecoration(
-                      labelText: 'Old password',
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      labelStyle: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20,
-                        height: 0,
-                      ),
-                      border: UnderlineInputBorder(
-                          borderSide: new BorderSide(
-                              color: Theme.of(context).dividerColor)),
-                      enabledBorder: UnderlineInputBorder(
-                          borderSide: new BorderSide(
-                              color: Theme.of(context).dividerColor)),
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: new BorderSide(
-                              color: Theme.of(context).primaryColor)),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        IconButton(
-                          icon: Icon(_showPassword1.value
-                              ? Icons.visibility
-                              : Icons.visibility_off),
-                          color: Theme.of(context).dividerColor,
-                          onPressed: () {
-                            _showPassword1.value = !_showPassword1.value;
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+              PasswordField(
+                controller: _currentPassword,
+                label: 'Current Password',
+                showPassword: _showPassword1,
+                context: context,
               ),
               SizedBox(height: 18),
-              Stack(
-                children: [
-                  TextFormField(
-                    obscureText: _showPassword2.value ? false : true,
-                    style: TextStyle(
-                      fontSize: 17,
-                      height: 1.3,
-                      fontWeight: FontWeight.w700,
-                    ),
-                    cursorColor: Colors.teal,
-                    scrollPadding: EdgeInsets.only(left: 40.0),
-                    decoration: InputDecoration(
-                      labelText: 'New password',
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      labelStyle: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20,
-                        height: 0,
-                      ),
-                      border: UnderlineInputBorder(
-                          borderSide: new BorderSide(
-                              color: Theme.of(context).dividerColor)),
-                      enabledBorder: UnderlineInputBorder(
-                          borderSide: new BorderSide(
-                              color: Theme.of(context).dividerColor)),
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: new BorderSide(
-                              color: Theme.of(context).primaryColor)),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        IconButton(
-                          icon: Icon(_showPassword2.value
-                              ? Icons.visibility
-                              : Icons.visibility_off),
-                          color: Theme.of(context).dividerColor,
-                          onPressed: () {
-                            _showPassword2.value = !_showPassword2.value;
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+              PasswordField(
+                controller: _newPassword,
+                label: 'New Password',
+                showPassword: _showPassword2,
+                context: context,
               ),
               SizedBox(height: 18),
-              Stack(
-                children: [
-                  TextFormField(
-                    obscureText: _showPassword3.value ? false : true,
-                    style: TextStyle(
-                      fontSize: 17,
-                      height: 1.3,
-                      fontWeight: FontWeight.w700,
-                    ),
-                    cursorColor: Colors.teal,
-                    scrollPadding: EdgeInsets.only(left: 40.0),
-                    decoration: InputDecoration(
-                      labelText: 'Confirm password',
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      labelStyle: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20,
-                        height: 0,
-                      ),
-                      border: UnderlineInputBorder(
-                          borderSide: new BorderSide(
-                              color: Theme.of(context).dividerColor)),
-                      enabledBorder: UnderlineInputBorder(
-                          borderSide: new BorderSide(
-                              color: Theme.of(context).dividerColor)),
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: new BorderSide(
-                              color: Theme.of(context).primaryColor)),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        IconButton(
-                          icon: Icon(_showPassword3.value
-                              ? Icons.visibility
-                              : Icons.visibility_off),
-                          color: Theme.of(context).dividerColor,
-                          onPressed: () {
-                            _showPassword3.value = !_showPassword3.value;
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+              PasswordField(
+                controller: _confirmPassword,
+                label: 'Confirm Password',
+                showPassword: _showPassword3,
+                context: context,
               ),
               SizedBox(height: 40),
               Container(
@@ -174,7 +49,45 @@ class ChangePassword extends StatelessWidget {
                 child: MaterialButton(
                   height: 55,
                   minWidth: MediaQuery.of(context).size.width,
-                  onPressed: () {},
+                  onPressed: () {
+                    if (_newPassword.text != _confirmPassword.text) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          backgroundColor: Colors.red,
+                          duration: Duration(seconds: 2),
+                          content: Text("Password does not match"),
+                        ),
+                      );
+                    } else {
+                      if (_newPassword.text.length < 8) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            backgroundColor: Colors.red,
+                            duration: Duration(seconds: 2),
+                            content: Text("Password must be 8 characters"),
+                          ),
+                        );
+                      } else if (_newPassword.text.length > 20) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            backgroundColor: Colors.red,
+                            duration: Duration(seconds: 2),
+                            content: Text(
+                                "Password must be less than 20 characters"),
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            backgroundColor: Colors.green,
+                            duration: Duration(seconds: 2),
+                            content: Text(
+                                "Password changed successfully | Not implemented yet"),
+                          ),
+                        );
+                      }
+                    }
+                  },
                   child: Text(
                     "Save",
                     style: TextStyle(

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hilpad/controller/AuthController.dart';
+import 'package:hilpad/screens/Widgets/NoData.dart';
 import 'package:hilpad/services/ThemeService.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -45,7 +46,7 @@ Widget futureBuilderBase(BuildContext context, AsyncSnapshot<dynamic> snapshot,
   } else {
     print(snapshot);
     print(Get.find<AuthController>().token.value);
-    return const Text("NO Data To Display");
+    return NoData(context);
   }
 }
 

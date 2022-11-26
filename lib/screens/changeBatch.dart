@@ -10,7 +10,7 @@ import 'package:hilpad/utils/universal_helper_functions.dart';
 class ChangeBatch extends StatelessWidget {
   ChangeBatch({Key? key}) : super(key: key);
   // get arguments getx named route
-  final SettingsController settingsController = Get.find<SettingsController>();
+  final SettingsController settingsController = Get.put(SettingsController());
 
   List<S2Choice<String>> options = [];
   List<S2Choice<String>> sectionOptions = [

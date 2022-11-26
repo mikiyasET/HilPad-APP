@@ -15,7 +15,7 @@ class SettingsPage extends StatelessWidget {
   SettingsPage({Key? key}) : super(key: key);
   final AuthController x = Get.find<AuthController>();
   final ThemeController tc = Get.put(ThemeController());
-  final SettingsController sc = Get.find<SettingsController>();
+  final SettingsController sc = Get.put(SettingsController());
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -29,8 +29,8 @@ class SettingsPage extends StatelessWidget {
                 User user = snapshot.data[0];
                 Student student = snapshot.data[1];
                 Batch batch = snapshot.data[2];
-                sc.batch.value = batch.code.toString();
-                sc.section.value = student.section.toString();
+                sc.setBatch(batch.code);
+                sc.setSection(student.section);
                 sc.changeText();
                 return SizedBox(
                   height: MediaQuery.of(context).size.height,
@@ -119,7 +119,7 @@ class SettingsPage extends StatelessWidget {
                         pinned: true,
                         backgroundColor: Theme.of(context).secondaryHeaderColor,
                         expandedHeight: 180,
-                        title: Padding(
+                        title: const Padding(
                           padding: const EdgeInsets.only(left: 10, top: 20),
                           child: Text("Settings"),
                         ),
@@ -134,8 +134,9 @@ class SettingsPage extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           child: Column(
                             children: [
-                              const ListTile(
-                                title: Text(
+                              ListTile(
+                                onTap: () => Get.toNamed('/telegram'),
+                                title: const Text(
                                   'Connect to Telegram',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w600,
@@ -149,7 +150,7 @@ class SettingsPage extends StatelessWidget {
                               const Divider(),
                               ListTile(
                                 onTap: () => Get.toNamed("/changeBatch"),
-                                title: Text(
+                                title: const Text(
                                   'Change Batch',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w600,

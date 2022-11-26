@@ -1,0 +1,26 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:hilpad/screens/Widgets/connectTelegram.dart';
+import 'package:hilpad/services/ThemeService.dart';
+
+class Telegram extends StatelessWidget {
+  final ThemeController tc = Get.put(ThemeController());
+
+  @override
+  Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: tc.isDarkMode.value
+            ? Theme.of(context).scaffoldBackgroundColor
+            : Theme.of(context).primaryColor));
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Connect to Telegram"),
+        elevation: 0,
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+      ),
+      body: connectTelegram(),
+    );
+  }
+}

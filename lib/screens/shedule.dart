@@ -76,7 +76,7 @@ class Schedule extends StatelessWidget {
                       ],
                     );
                   } else {
-                    return NoClass();
+                    return NoClass(error: true);
                   }
                 },
               ),
