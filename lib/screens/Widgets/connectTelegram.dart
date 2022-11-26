@@ -1,8 +1,11 @@
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hilpad/controller/AuthController.dart';
 
 Widget connectTelegram() {
+  final AuthController x = Get.find<AuthController>();
   return Container(
     margin: const EdgeInsets.only(top: 20),
     child: Center(
@@ -59,7 +62,10 @@ Widget connectTelegram() {
                     //   });
                     // }
                   },
-                  child: Text("Connect to HiLPaD"),
+                  child: Text(
+                    "Connect to HiLPaD",
+                    style: TextStyle(color: Colors.white),
+                  ),
                   elevation: 14,
                   color: Colors.blue,
                   shape: RoundedRectangleBorder(
@@ -77,6 +83,8 @@ Widget connectTelegram() {
                   "You have to connect to HiLPaD to use the app",
                   style: TextStyle(fontSize: 13, color: Colors.grey),
                 ),
+                TextButton(
+                    onPressed: () => x.signOut(), child: Text("Sign Out"))
               ],
             ),
           ],
