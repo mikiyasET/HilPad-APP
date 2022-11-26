@@ -26,7 +26,8 @@ dependencies:
   device_apps: ^2.2.0
   android_intent_plus: ^3.1.5
   font_awesome_flutter: ^10.2.1
-
+  syncfusion_flutter_sliders: ^20.3.58
+  multi_select_flutter: ^4.1.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
