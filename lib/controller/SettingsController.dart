@@ -6,6 +6,6 @@ class SettingsController extends GetxController {
   var batchSection = "".obs;
 
   changeText() => batchSection.value = "$batch$section";
-  setBatch(data) => batch.value = data.toUpperCase();
-  setSection(data) => section.value = data.toUpperCase();
+  setBatch(data) => batch.value = data.toString().toUpperCase();
+  setSection(data) => section.value = data.toString().toUpperCase();
 }

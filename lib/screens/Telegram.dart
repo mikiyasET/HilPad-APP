@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hilpad/screens/Widgets/connectTelegram.dart';
 import 'package:hilpad/services/ThemeService.dart';
-import 'package:web_socket_channel/io.dart';
 
 class Telegram extends StatelessWidget {
   final ThemeController tc = Get.put(ThemeController());

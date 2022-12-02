@@ -57,7 +57,7 @@ class SettingsPage extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(70)),
                                   child: Center(
                                     child: Text(user.name.toString()[0],
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             color: Colors.white, fontSize: 30)),
                                   ),
                                 ),
@@ -71,7 +71,7 @@ class SettingsPage extends StatelessWidget {
                                       Obx(
                                         () => Text(
                                           sc.batchSection.value,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               color: Colors.grey,
                                               fontSize: 14,
                                               fontWeight: FontWeight.bold),
@@ -81,12 +81,12 @@ class SettingsPage extends StatelessWidget {
                                         children: [
                                           Text(
                                             user.name.toString(),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 19,
                                             ),
                                           ),
-                                          SizedBox(width: 6),
+                                          const SizedBox(width: 6),
                                           Icon(
                                             Icons.verified,
                                             color: tc.isDarkMode.value
@@ -99,7 +99,7 @@ class SettingsPage extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                Spacer(),
+                                const Spacer(),
                                 Material(
                                   elevation: tc.isDarkMode.value ? 0 : 0,
                                   color: tc.isDarkMode.value
@@ -109,7 +109,7 @@ class SettingsPage extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10),
                                   child: IconButton(
                                       onPressed: () {},
-                                      icon: Icon(Icons.edit,
+                                      icon: const Icon(Icons.edit,
                                           size: 20, color: Colors.white)),
                                 )
                               ],
@@ -120,7 +120,7 @@ class SettingsPage extends StatelessWidget {
                         backgroundColor: Theme.of(context).secondaryHeaderColor,
                         expandedHeight: 180,
                         title: const Padding(
-                          padding: const EdgeInsets.only(left: 10, top: 20),
+                          padding: EdgeInsets.only(left: 10, top: 20),
                           child: Text("Settings"),
                         ),
                         titleTextStyle: const TextStyle(
@@ -143,9 +143,9 @@ class SettingsPage extends StatelessWidget {
                                       fontSize: 14),
                                 ),
                                 trailing:
-                                    Icon(Icons.cloud_done_rounded, size: 14),
+                                    const Icon(Icons.cloud_done_rounded, size: 14),
                                 contentPadding:
-                                    EdgeInsets.symmetric(horizontal: 20),
+                                    const EdgeInsets.symmetric(horizontal: 20),
                               ),
                               const Divider(),
                               ListTile(
@@ -157,11 +157,11 @@ class SettingsPage extends StatelessWidget {
                                       fontSize: 14),
                                 ),
                                 trailing:
-                                    Icon(Icons.arrow_forward_ios, size: 14),
+                                    const Icon(Icons.arrow_forward_ios, size: 14),
                                 contentPadding:
-                                    EdgeInsets.symmetric(horizontal: 20),
+                                    const EdgeInsets.symmetric(horizontal: 20),
                               ),
-                              Divider(),
+                              const Divider(),
                               ListTile(
                                 onTap: () {
                                   Get.toNamed('/changePassword');
@@ -173,7 +173,7 @@ class SettingsPage extends StatelessWidget {
                                       fontSize: 14),
                                 ),
                                 trailing:
-                                    Icon(Icons.arrow_forward_ios, size: 14),
+                                    const Icon(Icons.arrow_forward_ios, size: 14),
                                 contentPadding:
                                     const EdgeInsets.symmetric(horizontal: 20),
                               ),

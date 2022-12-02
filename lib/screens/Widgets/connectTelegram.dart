@@ -3,6 +3,8 @@ import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hilpad/controller/AuthController.dart';
+import 'package:socket_io_client/socket_io_client.dart';
+
 
 Widget connectTelegram() {
   final AuthController x = Get.find<AuthController>();
@@ -14,7 +16,7 @@ Widget connectTelegram() {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            PhysicalModel(
+            const PhysicalModel(
               shape: BoxShape.circle,
               color: Colors.white,
               child: Icon(
@@ -27,10 +29,26 @@ Widget connectTelegram() {
               children: [
                 MaterialButton(
                   onPressed: () async {
+
+                    Socket socket = io('http://localhost:4000');
+                    print("hereeeeeeeeeeeeee");
+                    try{
+                      socket.onConnect((_) {
+                        print('connect');
+                        socket.emit('msg', 'test');
+                      });
+                      socket.on('event', (data) => print(data));
+                      socket.onDisconnect((_) => print('disconnect'));
+                      socket.on('fromServer', (_) => print(_));
+                    } catch (e){
+                      print(e);
+                    }
+
+
                     var url = "https://telegram.me/hilpadbot?start=123456789";
-                    final telegramPKG = "org.telegram.messengers";
-                    final plusPKG = "org.telegram.plus";
-                    if (await DeviceApps.isAppInstalled(telegramPKG)) {
+                    const telegramPKG = "org.telegram.messengers";
+                    const plusPKG = "org.telegram.plus";
+                    /*if (await DeviceApps.isAppInstalled(telegramPKG)) {
                       DeviceApps.openApp(telegramPKG).then((value) {
                         AndroidIntent(
                           action: 'action_view',
@@ -38,7 +56,8 @@ Widget connectTelegram() {
                           package: telegramPKG,
                         ).launch();
                       });
-                    } else if (await DeviceApps.isAppInstalled(plusPKG)) {
+                    }
+                    else if (await DeviceApps.isAppInstalled(plusPKG)) {
                       DeviceApps.openApp(plusPKG).then((value) {
                         AndroidIntent(
                           action: 'action_view',
@@ -46,12 +65,15 @@ Widget connectTelegram() {
                           package: plusPKG,
                         ).launch();
                       });
-                    } else {
+                    }
+                    else {
                       AndroidIntent(
                         action: 'action_view',
                         data: url,
                       ).launch();
-                    }
+                    }*/
+
+
                     // else {
                     //   DeviceApps.openApp('com.android.chrome').then((value) {
                     //     AndroidIntent(
@@ -62,7 +84,7 @@ Widget connectTelegram() {
                     //   });
                     // }
                   },
-                  child: Text(
+                  child: const Text(
                     "Connect to HiLPaD",
                     style: TextStyle(color: Colors.white),
                   ),
@@ -71,20 +93,20 @@ Widget connectTelegram() {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50),
                   ),
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 90,
                     vertical: 20,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                Text(
+                const Text(
                   "You have to connect to HiLPaD to use the app",
                   style: TextStyle(fontSize: 13, color: Colors.grey),
                 ),
                 TextButton(
-                    onPressed: () => x.signOut(), child: Text("Sign Out"))
+                    onPressed: () => x.signOut(), child: const Text("Sign Out"))
               ],
             ),
           ],
