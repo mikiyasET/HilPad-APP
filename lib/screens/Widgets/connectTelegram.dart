@@ -30,13 +30,16 @@ Widget connectTelegram() {
                 MaterialButton(
                   onPressed: () async {
 
-                    Socket socket = io('http://localhost:4000');
+                    //10.0.2.2 for emulator and real server ip or domain for actual device
+                    Socket socket = io('http://10.0.2.2:4000',<String,dynamic>{
+                      "transports":["websocket"],
+                      "autoConnect":false,
+                    });
+                    socket.connect();
+                    print(socket.connected);
                     print("hereeeeeeeeeeeeee");
                     try{
-                      socket.onConnect((_) {
-                        print('connect');
-                        socket.emit('msg', 'test');
-                      });
+                      socket.onConnect((data)=>print('connect'));
                       socket.on('event', (data) => print(data));
                       socket.onDisconnect((_) => print('disconnect'));
                       socket.on('fromServer', (_) => print(_));

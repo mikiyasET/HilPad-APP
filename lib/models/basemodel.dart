@@ -18,7 +18,7 @@ class BaseModel {
   String controller;
   final DioCacheManager _dioCacheManager = DioCacheManager(CacheConfig());
   final Options _cacheOptions =
-      buildCacheOptions(const Duration(days: 20), forceRefresh: true);
+      buildCacheOptions(const Duration(days: 7),);
   //final Options? _cacheOptions = null;
 
   Dio dio = Dio(BaseOptions(
