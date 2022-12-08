@@ -17,8 +17,9 @@ import '../controller/AuthController.dart';
 class BaseModel {
   String controller;
   final DioCacheManager _dioCacheManager = DioCacheManager(CacheConfig());
-  final Options _cacheOptions =
-      buildCacheOptions(const Duration(days: 7),);
+  final Options _cacheOptions = buildCacheOptions(
+    const Duration(days: 7),
+  );
   //final Options? _cacheOptions = null;
 
   Dio dio = Dio(BaseOptions(
@@ -34,16 +35,27 @@ class BaseModel {
 
   Future<Response> hilpadGet({String subPath = ""}) =>
       dio.get("$controller/$subPath", options: _cacheOptions);
-  Future<Response> hilpadDelete({required int id}) =>
-      dio.delete('$controller/$id', options: _cacheOptions);
+  Future<Response> hilpadDelete({required int id}) {
+    _dioCacheManager.clearAll();
+    return dio.delete('$controller/$id', options: _cacheOptions);
+  }
+
   Future<Response> hilpadGetById({int? id, String subPath = ""}) =>
       dio.get('$controller/$subPath/${id ?? ""}', options: _cacheOptions);
-  Future<Response> hilpadPost({required Map data}) =>
-      dio.post(controller, data: data, options: _cacheOptions);
-  Future<Response> hilpadPatch({required Map data, required int id}) =>
-      dio.patch('$controller/$id', data: data, options: _cacheOptions);
-  Future<Response> hilpadPut({required Map data}) =>
-      dio.put(controller, data: data, options: _cacheOptions);
+  Future<Response> hilpadPost({required Map data}) {
+    _dioCacheManager.clearAll();
+    return dio.post(controller, data: data, options: _cacheOptions);
+  }
+
+  Future<Response> hilpadPatch({required Map data, required int id}) {
+    _dioCacheManager.clearAll();
+    return dio.patch('$controller/$id', data: data, options: _cacheOptions);
+  }
+
+  Future<Response> hilpadPut({required Map data}) {
+    _dioCacheManager.clearAll();
+    return dio.put(controller, data: data, options: _cacheOptions);
+  }
 }
 
 abstract class Model {

@@ -53,30 +53,33 @@ class ChangeBatch extends StatelessWidget {
                       title: 'Batch',
                       choiceItems: options,
                       onChange: (state) async {
-                        final s = Student();
-                        var res = await s.hilpadPatch(
-                          data: {
-                            "batch": state.value,
-                          },
-                          id: student.id ?? 0,
-                        );
-                        if (res.statusCode == 200) {
-                          settingsController.setBatch(state.title);
-                          settingsController.changeText();
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              backgroundColor: Colors.green,
-                              duration: Duration(seconds: 2),
-                              content: Text("Batch changed successfully"),
-                            ),
+                        if (int.parse(state.value!) != batch.id) {
+                          batch.id = int.parse(state.value!);
+                          final s = Student();
+                          var res = await s.hilpadPatch(
+                            data: {
+                              "batch": state.value,
+                            },
+                            id: student.id ?? 0,
                           );
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              duration: Duration(seconds: 2),
-                              content: Text("Batch not changed, try again"),
-                            ),
-                          );
+                          if (res.statusCode == 200) {
+                            settingsController.setBatch(state.title);
+                            settingsController.changeText();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                backgroundColor: Colors.green,
+                                duration: Duration(seconds: 2),
+                                content: Text("Batch changed successfully"),
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                duration: Duration(seconds: 2),
+                                content: Text("Batch not changed, try again"),
+                              ),
+                            );
+                          }
                         }
                       },
                       selectedValue: batch.id.toString(),
@@ -88,30 +91,33 @@ class ChangeBatch extends StatelessWidget {
                       title: 'Section',
                       choiceItems: sectionOptions,
                       onChange: (state) async {
-                        final s = Student();
-                        var res = await s.hilpadPatch(
-                          data: {
-                            "section": state.value,
-                          },
-                          id: student.id ?? 0,
-                        );
-                        if (res.statusCode == 200) {
-                          settingsController.setSection(state.value);
-                          settingsController.changeText();
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              backgroundColor: Colors.green,
-                              duration: Duration(seconds: 2),
-                              content: Text("Section changed successfully"),
-                            ),
+                        if (state.value != student.section) {
+                          student.section = state.value;
+                          final s = Student();
+                          var res = await s.hilpadPatch(
+                            data: {
+                              "section": state.value,
+                            },
+                            id: student.id ?? 0,
                           );
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              duration: Duration(seconds: 2),
-                              content: Text("Section not changed, try again"),
-                            ),
-                          );
+                          if (res.statusCode == 200) {
+                            settingsController.setSection(state.value);
+                            settingsController.changeText();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                backgroundColor: Colors.green,
+                                duration: Duration(seconds: 2),
+                                content: Text("Section changed successfully"),
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                duration: Duration(seconds: 2),
+                                content: Text("Section not changed, try again"),
+                              ),
+                            );
+                          }
                         }
                       },
                       selectedValue: student.section ?? 'a',
