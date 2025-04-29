@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hilpad/helper/ScheduleHelper.dart';
 import 'package:intl/intl.dart';
-import 'package:timelines/timelines.dart';
+import 'package:timelines_plus/timelines_plus.dart';
 
 Widget Schedules(context, x, courses, selectedDay) {
   // sort x by period first,second,third,fourth
@@ -17,7 +17,7 @@ Widget Schedules(context, x, courses, selectedDay) {
   final today_name = DateFormat('EEEE').format(DateTime.now()).toLowerCase();
   ;
   return DefaultTextStyle(
-    style: TextStyle(
+    style: const TextStyle(
       color: Color(0xff9b9b9b),
       fontSize: 12.5,
     ),
@@ -46,7 +46,7 @@ Widget Schedules(context, x, courses, selectedDay) {
               if (int.parse(today_day) <=
                   int.parse(selectedDay.value.toString())) {
                 return Padding(
-                  padding: EdgeInsets.only(right: 8.0),
+                  padding: const EdgeInsets.only(right: 8.0),
                   child: Column(
                     children: [
                       isPeriod(x[index].period) == 0 &&
@@ -55,24 +55,23 @@ Widget Schedules(context, x, courses, selectedDay) {
                               opacity: .5,
                               child: Text(
                                 getPeriod(x[index].period.toString()),
-                                style:
-                                    DefaultTextStyle.of(context).style.copyWith(
-                                          fontSize: 15.0,
-                                        ),
-                              ))
+                                style: const TextStyle(
+                                  fontSize: 15.0,
+                                ),
+                              ),
+                            )
                           : Text(
                               getPeriod(x[index].period.toString()),
-                              style:
-                                  DefaultTextStyle.of(context).style.copyWith(
-                                        fontSize: 15.0,
-                                      ),
+                              style: const TextStyle(
+                                fontSize: 15.0,
+                              ),
                             ),
                     ],
                   ),
                 );
               } else {
                 return Padding(
-                  padding: EdgeInsets.only(right: 8.0),
+                  padding: const EdgeInsets.only(right: 8.0),
                   child: Column(
                     children: [
                       Opacity(
@@ -113,12 +112,16 @@ Widget Schedules(context, x, courses, selectedDay) {
                                             .toString()
                                             .length),
                             style: DefaultTextStyle.of(context).style.copyWith(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.bold,
-                                color: isPeriod(x[index].period) >= 1 &&
-                                        x[index].day == today_name
-                                    ? Colors.white
-                                    : Color(0xff9b9b9b)),
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: isPeriod(x[index].period) >= 1 &&
+                                          x[index].day == today_name
+                                      ? Theme.of(context)
+                                          .colorScheme
+                                          .onSurface
+                                          .withValues(alpha: .9)
+                                      : const Color(0xff9b9b9b),
+                                ),
                           ),
                           const SizedBox(
                             width: 5,
@@ -145,26 +148,27 @@ Widget Schedules(context, x, courses, selectedDay) {
                                     ),
                                   ),
                                 )
-                              : Text(""),
+                              : const Text(""),
                         ],
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10.0, bottom: 15.0),
                         child: Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.location_on,
                               size: 13,
                               color: Color(0xff9b9b9b),
                             ),
-                            SizedBox(
-                              width: 2,
+                            const SizedBox(
+                              width: 5,
                             ),
                             Text(
                               "Room ${x[index].room}",
                               style:
                                   DefaultTextStyle.of(context).style.copyWith(
                                         fontSize: 14.0,
+                                        fontWeight: FontWeight.w500,
                                       ),
                             ),
                           ],

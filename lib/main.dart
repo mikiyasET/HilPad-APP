@@ -9,7 +9,7 @@ import 'package:hilpad/screens/changePassword.dart';
 import 'package:hilpad/screens/login.dart';
 import 'package:hilpad/screens/signup.dart';
 import 'package:hilpad/services/ThemeService.dart';
-import 'package:hilpad/utils/Theme.dart';
+import 'package:hilpad/utils/theme/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +19,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -33,8 +34,8 @@ class MyApp extends StatelessWidget {
         '/telegram': (context) => Telegram(),
       },
       title: 'HilPad',
-      theme: Themes.light,
-      darkTheme: Themes.dark,
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
       themeMode: ThemeController().theme,
       initialRoute: '/',
       debugShowCheckedModeBanner: false,

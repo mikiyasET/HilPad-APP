@@ -1,5 +1,5 @@
-import 'package:awesome_select/awesome_select.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_awesome_select_clone/flutter_awesome_select.dart';
 import 'package:get/get.dart';
 import 'package:hilpad/controller/SettingsController.dart';
 import 'package:hilpad/helper/SettingsHelper.dart';

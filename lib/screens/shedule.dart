@@ -19,13 +19,17 @@ class Schedule extends StatelessWidget {
   final c = Get.find<Controller>();
   var selectedDay = 0.obs;
   final ThemeController tc = Get.put(ThemeController());
+
   @override
   Widget build(BuildContext context) {
     c.currentDay.value = DateFormat('EEEE').format(DateTime.now());
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
         statusBarColor: tc.isDarkMode.value
-            ? Theme.of(context).backgroundColor
-            : Theme.of(context).primaryColor));
+            ? Theme.of(context).colorScheme.surface
+            : Theme.of(context).colorScheme.primary,
+      ),
+    );
     return Container(
       child: FutureBuilder(
           future: ScheduleHelperList(),
@@ -46,32 +50,36 @@ class Schedule extends StatelessWidget {
                           elevation: 5,
                           child: Container(
                             color: tc.isDarkMode.value
-                                ? Theme.of(context).backgroundColor
+                                ? Theme.of(context).colorScheme.surface
                                 : Theme.of(context).primaryColor,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  right: 10, left: 10, top: 30),
-                              child: WeekDays(selectedDay),
+                            child: SafeArea(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    right: 10, left: 10, top: 10),
+                                child: WeekDays(selectedDay),
+                              ),
                             ),
                           ),
                         ),
                         Container(
                           padding: const EdgeInsets.only(top: 30.0),
-                          child: Obx(() => x
-                                      .where((element) =>
-                                          element.day ==
-                                          c.currentDay.value.toLowerCase())
-                                      .length ==
-                                  0
-                              ? NoClass()
-                              : Schedules(
-                                  context,
-                                  x.where((element) {
-                                    return element.day ==
-                                        c.currentDay.value.toLowerCase();
-                                  }).toList(),
-                                  courses,
-                                  selectedDay)),
+                          child: Obx(
+                            () => x
+                                    .where((element) =>
+                                        element.day ==
+                                        c.currentDay.value.toLowerCase())
+                                    .isEmpty
+                                ? NoClass()
+                                : Schedules(
+                                    context,
+                                    x.where((element) {
+                                      return element.day ==
+                                          c.currentDay.value.toLowerCase();
+                                    }).toList(),
+                                    courses,
+                                    selectedDay,
+                                  ),
+                          ),
                         ),
                       ],
                     );

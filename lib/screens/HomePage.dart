@@ -22,41 +22,47 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: FutureBuilder(
-        future: isUserConnected(),
-        builder: (context, snapshot) {
-          return futureBuilderBase(
-            context,
-            snapshot,
-            body: Builder(
-              builder: (BuildContext context) {
-                bool check = snapshot.data as bool;
-                c.changePage(0);
-                return check
-                    ? Scaffold(
-                        body: PageView(
-                            controller: controller,
-                            onPageChanged: (index) => c.changePage(index),
-                            children: [
-                              SingleChildScrollView(
-                                physics: ClampingScrollPhysics(),
-                                child: Schedule(),
-                              ),
-                              SingleChildScrollView(
-                                physics: const BouncingScrollPhysics(),
-                                child: CourseFilesPage(),
-                              ),
-                              SingleChildScrollView(
-                                physics: const BouncingScrollPhysics(),
-                                child: ExamFilesPage(),
-                              ),
-                              SettingsPage()
-                            ]),
-                        bottomNavigationBar: Obx(() => BottomNavyBar(
+    return FutureBuilder(
+      future: isUserConnected(),
+      builder: (context, snapshot) {
+        return futureBuilderBase(
+          context,
+          snapshot,
+          body: Builder(
+            builder: (BuildContext context) {
+              bool check = snapshot.data as bool;
+              c.changePage(0);
+              return check
+                  ? Scaffold(
+                      body: PageView(
+                          controller: controller,
+                          onPageChanged: (index) => c.changePage(index),
+                          children: [
+                            SingleChildScrollView(
+                              physics: ClampingScrollPhysics(),
+                              child: Schedule(),
+                            ),
+                            SingleChildScrollView(
+                              physics: const BouncingScrollPhysics(),
+                              child: CourseFilesPage(),
+                            ),
+                            SingleChildScrollView(
+                              physics: const BouncingScrollPhysics(),
+                              child: ExamFilesPage(),
+                            ),
+                            SettingsPage()
+                          ]),
+                      bottomNavigationBar: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Obx(() => BottomNavyBar(
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.surface,
                               selectedIndex: c.selectedIndex.value,
                               showElevation: true,
                               itemCornerRadius: 24,
+                              itemPadding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               curve: Curves.easeIn,
                               onItemSelected: (index) {
                                 c.changePage(index);
@@ -64,7 +70,8 @@ class HomePage extends StatelessWidget {
                               },
                               items: <BottomNavyBarItem>[
                                 BottomNavyBarItem(
-                                  icon: const Icon(Icons.apps),
+                                  icon: const Icon(Icons.apps)
+                                      .paddingOnly(left: 10),
                                   title: const Text('Home'),
                                   activeColor: tc.isDarkMode.value
                                       ? Colors.white
@@ -72,7 +79,8 @@ class HomePage extends StatelessWidget {
                                   textAlign: TextAlign.center,
                                 ),
                                 BottomNavyBarItem(
-                                  icon: const Icon(Icons.book),
+                                  icon: const Icon(Icons.book)
+                                      .paddingOnly(left: 10),
                                   title: const Text('Files'),
                                   activeColor: tc.isDarkMode.value
                                       ? Colors.white
@@ -80,7 +88,8 @@ class HomePage extends StatelessWidget {
                                   textAlign: TextAlign.center,
                                 ),
                                 BottomNavyBarItem(
-                                  icon: const Icon(Icons.perm_media),
+                                  icon: const Icon(Icons.perm_media)
+                                      .paddingOnly(left: 10),
                                   title: const Text('Exams'),
                                   activeColor: tc.isDarkMode.value
                                       ? Colors.white
@@ -88,7 +97,8 @@ class HomePage extends StatelessWidget {
                                   textAlign: TextAlign.center,
                                 ),
                                 BottomNavyBarItem(
-                                  icon: const Icon(Icons.settings),
+                                  icon: const Icon(Icons.settings)
+                                      .paddingOnly(left: 10),
                                   title: const Text('Settings'),
                                   activeColor: tc.isDarkMode.value
                                       ? Colors.white
@@ -97,13 +107,13 @@ class HomePage extends StatelessWidget {
                                 ),
                               ],
                             )),
-                      )
-                    : Telegram();
-              },
-            ),
-          );
-        },
-      ),
+                      ),
+                    )
+                  : Telegram();
+            },
+          ),
+        );
+      },
     );
   }
 }

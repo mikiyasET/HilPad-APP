@@ -2,8 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:open_file/open_file.dart';
 
 import '../constants/api_constants.dart';
@@ -13,6 +11,7 @@ import '../utils/universal_helper_functions.dart';
 
 class FileTile extends StatelessWidget {
   final CourseFile file;
+
   FileTile({Key? key, required this.file}) : super(key: key) {
     fe();
   }
@@ -29,23 +28,23 @@ class FileTile extends StatelessWidget {
         onTap: onTap,
         child: Container(
           decoration: BoxDecoration(
-              color: Theme.of(context).backgroundColor,
-              borderRadius: BorderRadius.circular(10)),
+            color: Colors.grey.withValues(alpha: .1),
+            borderRadius: BorderRadius.circular(10),
+          ),
           height: 120,
           child: Row(
             children: [
               Expanded(
-                  flex: 2,
-                  child: ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(10),
-                          topLeft: Radius.circular(10)),
-                      child: Container(
-                        child: Center(
-                          child: iconize(file.fileType),
-                        ),
-                        height: 120,
-                      ))),
+                flex: 2,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(10),
+                      topLeft: Radius.circular(10)),
+                  child: Center(
+                    child: iconize(file.fileType),
+                  ),
+                ),
+              ),
               Expanded(
                 flex: 5,
                 child: Padding(
@@ -56,7 +55,7 @@ class FileTile extends StatelessWidget {
                       Text(
                         "${(file.fileSize! * 0.000001).floorToDouble() > 0.0 ? (file.fileSize! * 0.000001).floorToDouble() : (file.fileSize! * 0.001).floorToDouble()}${(file.fileSize! * 0.000001).floorToDouble() > 0.0 ? "MB" : "KB"}",
                         style: TextStyle(
-                            color: Theme.of(context).primaryColorLight,
+                            color: Theme.of(context).colorScheme.onSurface,
                             fontWeight: FontWeight.w500,
                             fontSize: 13),
                       ),
@@ -66,7 +65,7 @@ class FileTile extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             height: 1.5,
-                            color: Theme.of(context).primaryColorLight,
+                            color: Theme.of(context).colorScheme.onSurface,
                             fontWeight: FontWeight.w600,
                             fontSize: 15),
                       ),
@@ -74,15 +73,19 @@ class FileTile extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("${file.year} ${file.season}",
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColorLight,
-                                  fontSize: 12)),
+                          Text(
+                            "${file.year} ${file.season}",
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.onSurface,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500),
+                          ),
                           Obx(
                             () => isDownloaded.value
                                 ? Icon(
                                     Icons.verified,
-                                    color: Theme.of(context).primaryColorLight,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   )
                                 : downloading.value
                                     ? SizedBox(
@@ -92,14 +95,17 @@ class FileTile extends StatelessWidget {
                                           backgroundColor: Colors.grey,
                                           valueColor: AlwaysStoppedAnimation(
                                               Theme.of(context)
-                                                  .primaryColorLight),
+                                                  .colorScheme
+                                                  .primary),
                                           strokeWidth: 3,
                                           value: progress.value,
                                         ))
                                     : Text(
                                         "Download",
                                         style: TextStyle(
-                                          color: Theme.of(context).primaryColor,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                           fontSize: 12,
                                           fontWeight: FontWeight.w500,
                                         ),

@@ -5,53 +5,56 @@ import 'package:intl/intl.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
-import '../components/search_bar.dart';
-
 class ExamFilesPage extends StatelessWidget {
   ExamFilesPage({Key? key}) : super(key: key);
 
   var _values = SfRangeValues(2010, 2022).obs;
   List<dynamic> _list = ["Mid", "Final", "Quiz"].obs;
   List<dynamic> _list2 = ["AUT", "WIN", "SPR"].obs;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          /*FutureBuilder(
-            future: getList(Course()),
-            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-              if(snapshot.connectionState == ConnectionState.waiting){
-                return const Center(child: CircularProgressIndicator(),);
-              }
-
-              //print(snapshot.data);
-              if(snapshot.data != null){
-                List<Course> data = snapshot.data as List<Course>;
-                return Column(
-                  children: data.map((e) =>
-                      ListTile(
-                        leading: Icon(Icons.folder),
-                        trailing: Icon(Icons.more_horiz),
-                        title: Text("${e.name} ${e.code}"),
-                      )).toList(),
-                );
-              }else{
-                return const Text("NO Data To Display");
-              }
-            },
-          ),*/
-          Row(
-            children: [
-              Expanded(
-                child: SearchBar(),
-                flex: 1,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: IconButton(
+    return SafeArea(
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            /*FutureBuilder(
+              future: getList(Course()),
+              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                if(snapshot.connectionState == ConnectionState.waiting){
+                  return const Center(child: CircularProgressIndicator(),);
+                }
+      
+                //print(snapshot.data);
+                if(snapshot.data != null){
+                  List<Course> data = snapshot.data as List<Course>;
+                  return Column(
+                    children: data.map((e) =>
+                        ListTile(
+                          leading: Icon(Icons.folder),
+                          trailing: Icon(Icons.more_horiz),
+                          title: Text("${e.name} ${e.code}"),
+                        )).toList(),
+                  );
+                }else{
+                  return const Text("NO Data To Display");
+                }
+              },
+            ),*/
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                children: [
+                  const Expanded(
+                    child: SearchBar(
+                      hintText: "Search ... ",
+                    ),
+                    flex: 1,
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: IconButton(
                       splashColor: Colors.transparent,
                       onPressed: () {
                         showModalBottomSheet(
@@ -63,7 +66,7 @@ class ExamFilesPage extends StatelessWidget {
                           ),
                           context: context,
                           builder: (context) => Container(
-                            height: MediaQuery.of(context).size.height / 2,
+                            height: MediaQuery.of(context).size.height / 2.3,
                             padding: const EdgeInsets.symmetric(
                               vertical: 20,
                               horizontal: 20,
@@ -75,23 +78,28 @@ class ExamFilesPage extends StatelessWidget {
                                   children: [
                                     Center(
                                       child: Padding(
-                                        padding: const EdgeInsets.only(top: 10),
-                                        child: Text("Filters",
-                                            textAlign: TextAlign.center,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline5),
+                                        padding: EdgeInsets.only(top: 10),
+                                        child: Text(
+                                          "Filters",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                     const SizedBox(
-                                      height: 20,
+                                      height: 10,
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(left: 15),
                                       child: Text(
                                         "Exam Year",
                                         style: TextStyle(
-                                          color: Colors.white,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSurface,
                                           fontSize: 16,
                                         ),
                                       ),
@@ -102,8 +110,9 @@ class ExamFilesPage extends StatelessWidget {
                                       max: 2022,
                                       values: _values.value,
                                       interval: 4,
-                                      // showTicks: true,
+                                      showTicks: true,
                                       enableTooltip: true,
+                                      showLabels: true,
                                       minorTicksPerInterval: 1,
                                       onChanged: (SfRangeValues values) {
                                         _values.value = values;
@@ -112,14 +121,16 @@ class ExamFilesPage extends StatelessWidget {
                                       inactiveColor: Colors.red.shade200,
                                     ),
                                     const SizedBox(
-                                      height: 20,
+                                      height: 10,
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(left: 15),
                                       child: Text(
                                         "Exam Type",
                                         style: TextStyle(
-                                          color: Colors.white,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSurface,
                                           fontSize: 16,
                                         ),
                                       ),
@@ -146,18 +157,23 @@ class ExamFilesPage extends StatelessWidget {
                                         borderRadius:
                                             BorderRadius.circular(10.0),
                                       ),
-                                      textStyle: const TextStyle(
-                                          color: Colors.white, fontSize: 12),
+                                      textStyle: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSurface,
+                                          fontSize: 12),
                                     ),
                                     const SizedBox(
-                                      height: 20,
+                                      height: 10,
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(left: 15),
                                       child: Text(
                                         "Exam Session",
                                         style: TextStyle(
-                                          color: Colors.white,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSurface,
                                           fontSize: 16,
                                         ),
                                       ),
@@ -184,8 +200,11 @@ class ExamFilesPage extends StatelessWidget {
                                         borderRadius:
                                             BorderRadius.circular(10.0),
                                       ),
-                                      textStyle: const TextStyle(
-                                          color: Colors.white, fontSize: 12),
+                                      textStyle: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSurface,
+                                          fontSize: 12),
                                     ),
                                   ],
                                 ),
@@ -194,13 +213,15 @@ class ExamFilesPage extends StatelessWidget {
                           ),
                         );
                       },
-                      icon: const FaIcon(FontAwesomeIcons.sliders)),
-                ),
-                flex: 0,
-              )
-            ],
-          ),
-        ],
+                      icon: const FaIcon(FontAwesomeIcons.sliders),
+                    ),
+                    flex: 0,
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
